@@ -8,24 +8,27 @@
 import Foundation
 
 /// A view model for a product on the products screen.
-struct ProductPreviewViewModel {
+struct ProductPreviewViewModel: Hashable {
   private let product: Product
   
   init(product: Product) {
     self.product = product
   }
-  
-  var productThumbnailData: Data?
-  
-  var productPriceText: String {
-    return "$" + String(product.price)
+    
+  var productInformationText: String {
+    return "$" + String(product.price) + " • " + product.title
   }
   
-  var productTitleText: String {
-    return product.title
+  func downloadThumbnail() async -> Data? {
+    return await ImageService.downloadImageDataAsync(from: product.thumbnail)
   }
   
-  private mutating func downloadThumbnail() async {
-    productThumbnailData = await ImageService.downloadImageDataAsync(from: product.thumbnail)
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(product.id)
+    hasher.combine(product.title)
+  }
+
+  static func == (lhs: ProductPreviewViewModel, rhs: ProductPreviewViewModel) -> Bool {
+    return lhs.product.id == rhs.product.id && lhs.product.title == rhs.product.title
   }
 }

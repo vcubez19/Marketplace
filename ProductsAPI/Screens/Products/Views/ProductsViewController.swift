@@ -13,6 +13,57 @@ final class ProductsViewController: UICollectionViewController {
   
   // MARK: UI Elements
   
+  private lazy var categoriesButton: UIButton = {
+    
+    var configuration = UIButton.Configuration.plain()
+    
+    configuration.image = UIImage(systemName: "rectangle.3.group")
+    configuration.background.backgroundColor = .darkGray
+    configuration.imageColorTransformer = UIConfigurationColorTransformer{ color in
+      return .white
+    }
+    configuration.cornerStyle = .capsule
+    configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .medium)
+    
+    let button = UIButton(primaryAction: UIAction { [unowned self] _ in
+      // TODO: Replace vc with a vc containing categories
+      let vc = UIViewController()
+      vc.view.backgroundColor = .blue
+      
+      if let sheet = vc.sheetPresentationController {
+        sheet.detents = [
+          .custom { _ in
+            return vc.view.frame.height / 4.0
+          }
+        ]
+      }
+    
+      self.present(vc, animated: true)
+    })
+    
+    button.configuration = configuration
+    
+    return button
+  }()
+  
+  private let searchButton: UIButton = {
+    
+    var configuration = UIButton.Configuration.plain()
+    
+    configuration.image = UIImage(systemName: "magnifyingglass")
+    configuration.background.backgroundColor = .darkGray
+    configuration.imageColorTransformer = UIConfigurationColorTransformer{ color in
+      return .white
+    }
+    configuration.cornerStyle = .capsule
+    configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .medium)
+    
+    let button = UIButton()
+    button.configuration = configuration
+    
+    return button
+  }()
+  
   private let loadingIndicator: UIActivityIndicatorView = {
     let view = UIActivityIndicatorView(style: .medium)
     view.color = .label
@@ -28,18 +79,28 @@ final class ProductsViewController: UICollectionViewController {
   
   private var cancellables = Set<AnyCancellable>()
   
+  private var dataSource: UICollectionViewDiffableDataSource<Int, ProductPreviewViewModel>!
+  
   // MARK: Lifecycle methods
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupView()
+    setDataSource()
     setBindings()
-    downloadProducts()
+//    downloadProducts()
   }
   
   // MARK: Methods
   
   private func setupView() {
+    let categoriesBarButton = UIBarButtonItem(customView: categoriesButton)
+    let searchBarButton = UIBarButtonItem(customView: searchButton)
+    navigationItem.leftBarButtonItem = categoriesBarButton
+    navigationItem.rightBarButtonItem = searchBarButton
+    
+    collectionView.register(ProductPreviewCollectionViewCell.self, forCellWithReuseIdentifier: ProductPreviewCollectionViewCell.id)
+    
     view.addSubview(loadingIndicator)
     
     NSLayoutConstraint.activate([
@@ -48,11 +109,24 @@ final class ProductsViewController: UICollectionViewController {
     ])
   }
   
+  // MARK: Collection view data source
+  
+  private func setDataSource() {
+    dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, product in
+      
+      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductPreviewCollectionViewCell.id, for: indexPath) as! ProductPreviewCollectionViewCell
+      
+      cell.configure(product: product)
+      
+      return cell
+    })
+  }
+  
   private func setBindings() {
     viewModel.$products
       .receive(on: DispatchQueue.main)
       .sink(receiveValue: { [weak self] products in
-        // TODO: Apply snapshot
+        self?.applySnapshot(products: products)
       })
       .store(in: &cancellables)
     
@@ -76,7 +150,28 @@ final class ProductsViewController: UICollectionViewController {
       .store(in: &cancellables)
   }
   
+  private func applySnapshot(products: [ProductPreviewViewModel]) {
+    var snapshot = NSDiffableDataSourceSnapshot<Int, ProductPreviewViewModel>()
+    
+    snapshot.appendSections([0])
+    snapshot.appendItems(products)
+    
+    dataSource.apply(snapshot)
+  }
+  
   private func downloadProducts() {
     viewModel.downloadProducts()
+  }
+}
+
+// MARK: Collection view delegate
+
+extension ProductsViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    let spacing: CGFloat = 10.0
+    let collectionViewWidth = collectionView.bounds.width
+    let itemWidth = (collectionViewWidth - spacing) / 2.0
+
+    return CGSize(width: itemWidth, height: collectionView.frame.height / 3.0)
   }
 }

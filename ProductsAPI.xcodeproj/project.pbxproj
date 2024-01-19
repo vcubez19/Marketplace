@@ -22,6 +22,7 @@
 		322146C42B5B0F2F00C3F382 /* AlertHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322146C32B5B0F2F00C3F382 /* AlertHelpers.swift */; };
 		322146C72B5B0FDA00C3F382 /* BottomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322146C62B5B0FDA00C3F382 /* BottomAlertView.swift */; };
 		322146CA2B5B133700C3F382 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322146C92B5B133700C3F382 /* MessageType.swift */; };
+		32F3A7162B5B247C00857C69 /* ProductPreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F3A7152B5B247C00857C69 /* ProductPreviewCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		322146C32B5B0F2F00C3F382 /* AlertHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelpers.swift; sourceTree = "<group>"; };
 		322146C62B5B0FDA00C3F382 /* BottomAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomAlertView.swift; sourceTree = "<group>"; };
 		322146C92B5B133700C3F382 /* MessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
+		32F3A7152B5B247C00857C69 /* ProductPreviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductPreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				322146942B5AF47600C3F382 /* ProductsViewController.swift */,
+				32F3A7152B5B247C00857C69 /* ProductPreviewCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				322146B92B5B03E700C3F382 /* ProductsViewModel.swift in Sources */,
 				322146BE2B5B05E900C3F382 /* APIError.swift in Sources */,
 				322146AF2B5AF91C00C3F382 /* Product.swift in Sources */,
+				32F3A7162B5B247C00857C69 /* ProductPreviewCollectionViewCell.swift in Sources */,
 				322146C42B5B0F2F00C3F382 /* AlertHelpers.swift in Sources */,
 				322146B42B5AFA9C00C3F382 /* ProductPreviewViewModel.swift in Sources */,
 				322146CA2B5B133700C3F382 /* MessageType.swift in Sources */,

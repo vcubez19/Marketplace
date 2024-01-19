@@ -23,26 +23,25 @@ final class ProductsViewModel {
   private var moreProducts: Bool = true
   
   func downloadProducts() {
-    errorMessage = "testing error message"
-//    guard moreProducts else { return }
-//    
-//    downloadingProducts = true
-//    APIService.getAndDecode(from: "https://dummyjson.com/products?skip=\(productsSkip)&limit=\(productsLimit)",
-//                            decode: ProductsResponse.self) { [weak self] result in
-//      guard let strongSelf = self else { return }
-//      
-//      switch result {
-//        case .success(let productsResponse):
-//          strongSelf.products.append(contentsOf: productsResponse.products.map({ ProductPreviewViewModel(product: $0) }))
-//        
-//          strongSelf.productsSkip += strongSelf.productsLimit
-//        
-//          strongSelf.moreProducts = strongSelf.products.count != productsResponse.total
-//        case .failure(_):
-//          strongSelf.errorMessage = "Could not get products. Try again soon."
-//      }
-//      
-//      strongSelf.downloadingProducts = false
-//    }
+    guard moreProducts else { return }
+    
+    downloadingProducts = true
+    APIService.getAndDecode(from: "https://dummyjson.com/products?skip=\(productsSkip)&limit=\(productsLimit)",
+                            decode: ProductsResponse.self) { [weak self] result in
+      guard let strongSelf = self else { return }
+      
+      switch result {
+        case .success(let productsResponse):
+          strongSelf.products.append(contentsOf: productsResponse.products.map({ ProductPreviewViewModel(product: $0) }))
+        
+          strongSelf.productsSkip += strongSelf.productsLimit
+        
+          strongSelf.moreProducts = strongSelf.products.count != productsResponse.total
+        case .failure(_):
+          strongSelf.errorMessage = "Could not get products. Try again soon."
+      }
+      
+      strongSelf.downloadingProducts = false
+    }
   }
 }
