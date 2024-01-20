@@ -15,8 +15,20 @@ struct ImageService {
       return nil
     }
     
+    let urlRequest = URLRequest(url: url)
+    
+    // Check cache
+    if let cachedResponse = URLCache.shared.cachedResponse(for: urlRequest) {
+      return cachedResponse.data
+    }
+    
     do {
-      let (data, _) = try await URLSession.shared.data(from: url)
+      let (data, response) = try await URLSession.shared.data(from: url)
+      
+      // Save image to cache
+      let cachedResponseToSave = CachedURLResponse(response: response, data: data)
+      URLCache.shared.storeCachedResponse(cachedResponseToSave, for: urlRequest)
+      
       return data
     } catch {
       // TODO: Log

@@ -26,14 +26,13 @@ final class ProductsViewController: UICollectionViewController {
     configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .medium)
     
     let button = UIButton(primaryAction: UIAction { [unowned self] _ in
-      // TODO: Replace vc with a vc containing categories
-      let vc = UIViewController()
-      vc.view.backgroundColor = .blue
+      let vc = CategoriesViewController()
       
       if let sheet = vc.sheetPresentationController {
+        sheet.prefersGrabberVisible = true
         sheet.detents = [
           .custom { _ in
-            return vc.view.frame.height / 4.0
+            return vc.view.frame.height / 3.0
           }
         ]
       }

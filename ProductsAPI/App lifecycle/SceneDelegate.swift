@@ -21,6 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     window.rootViewController = UINavigationController(rootViewController: ProductsViewController(collectionViewLayout: layout))
     window.makeKeyAndVisible()
     self.window = window
+    
+    URLCache.shared.diskCapacity = 0
   }
 
   func sceneDidDisconnect(_ scene: UIScene) {
