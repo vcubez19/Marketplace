@@ -14,6 +14,10 @@ struct ProductPreviewViewModel: Hashable {
   init(product: Product) {
     self.product = product
   }
+  
+  var category: String {
+    return product.category
+  }
     
   var productInformationText: String {
     return "$" + String(product.price) + " • " + product.title

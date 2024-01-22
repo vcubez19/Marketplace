@@ -8,6 +8,10 @@
 import UIKit
 import Combine
 
+protocol CategoriesViewControllerDelegate: AnyObject {
+  func applyCategoryFilter(_ categories: [CategoryViewModel])
+}
+
 final class CategoriesViewController: UIViewController {
   
   // MARK: UI Elements
@@ -34,7 +38,7 @@ final class CategoriesViewController: UIViewController {
     return collectionView
   }()
   
-  private let applyFilterButton: UIButton = {
+  private lazy var applyFilterButton: UIButton = {
     var configuration = UIButton.Configuration.tinted()
     
     configuration.title = "Apply filter"
@@ -45,7 +49,20 @@ final class CategoriesViewController: UIViewController {
       return UIColor.white
     }
     
-    let button = UIButton(type: .system)
+    let button = UIButton(type: .system, primaryAction: UIAction { [unowned self] _ in
+      
+      if self.viewModel.filterActive {
+        self.viewModel.appliedCategories.removeAll()
+        self.viewModel.filterActive = false
+      } else {
+        self.viewModel.appliedCategories = self.viewModel.selectedCategories
+        self.viewModel.filterActive = true
+      }
+      
+      self.delegate?.applyCategoryFilter(self.viewModel.appliedCategories)
+      self.dismiss(animated: true)
+    })
+    
     button.configuration = configuration
     button.isEnabled = false
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -55,12 +72,14 @@ final class CategoriesViewController: UIViewController {
   
   // MARK: Stored properties
   
-  private let viewModel: CategoriesViewModel = CategoriesViewModel()
+  var viewModel: CategoriesViewModel!
   
   private var cancellables = Set<AnyCancellable>()
   
   private var dataSource: UICollectionViewDiffableDataSource<Int, CategoryViewModel>!
   
+  weak var delegate: CategoriesViewControllerDelegate?
+    
   // MARK: Lifecycle methods
   
   override func viewDidLoad() {
@@ -71,9 +90,26 @@ final class CategoriesViewController: UIViewController {
     downloadCategories()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
+    // Updates apply filter button
+    viewModel.selectedCategories = viewModel.appliedCategories
+    
+    // Updates categories data source to show correct applied categories
+    viewModel.categories.forEach { category in
+      category.selected = viewModel.appliedCategories.contains(category)
+    }
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(true)
+    viewModel.selectedCategories.removeAll()
+  }
+  
   // MARK: Methods
   
   private func setupView() {
+    view.backgroundColor = .systemBackground
     view.addSubview(categoriesLabel)
     view.addSubview(categoriesCollectionView)
     view.addSubview(applyFilterButton)
@@ -118,9 +154,16 @@ final class CategoriesViewController: UIViewController {
     viewModel.$selectedCategories
       .receive(on: DispatchQueue.main)
       .sink { [weak self] selectedCategories in
-        self?.applyFilterButton.isEnabled = !selectedCategories.isEmpty
+        guard let strongSelf = self else { return }
+        strongSelf.applyFilterButton.isEnabled = !selectedCategories.isEmpty
 
-        self?.applyFilterButton.configuration?.image = selectedCategories.isEmpty ? nil : UIImage(systemName: "\(selectedCategories.count).circle.fill")
+        strongSelf.applyFilterButton.configuration?.image = selectedCategories.isEmpty ? nil : UIImage(systemName: "\(selectedCategories.count).circle.fill")
+        
+        strongSelf.applyFilterButton.configuration?.title = strongSelf.viewModel.filterActive ? "Clear filter" : "Apply filter"
+        
+        strongSelf.applyFilterButton.configuration?.baseBackgroundColor = strongSelf.viewModel.filterActive ? .systemPurple : .systemBlue
+        
+        strongSelf.applyFilterButton.configuration?.baseForegroundColor = strongSelf.viewModel.filterActive ? .systemPurple : .systemBlue
       }
       .store(in: &cancellables)
   }
@@ -143,10 +186,11 @@ final class CategoriesViewController: UIViewController {
 
 extension CategoriesViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    var snapshot = dataSource.snapshot()
-    
+        
     let category = viewModel.categories[indexPath.item]
     
+    var snapshot = dataSource.snapshot()
+        
     category.selected.toggle()
     
     if let existingCategory = snapshot.itemIdentifiers.first(where: { $0.title == category.title }) {

@@ -12,6 +12,8 @@ final class ProductsViewModel {
  
   @Published var products: [ProductPreviewViewModel] = []
   
+  @Published var productsFiltered: [ProductPreviewViewModel] = []
+  
   @Published var errorMessage: String?
   
   @Published var downloadingProducts: Bool = false
@@ -43,5 +45,10 @@ final class ProductsViewModel {
       
       strongSelf.downloadingProducts = false
     }
+  }
+  
+  func applyCategoryFilter(_ categoryNames: [String]) {
+    // Filter contains
+    productsFiltered = categoryNames.isEmpty ? products : products.filter({ categoryNames.contains($0.category) })
   }
 }

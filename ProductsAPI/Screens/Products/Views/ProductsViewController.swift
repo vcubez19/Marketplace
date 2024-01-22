@@ -28,6 +28,9 @@ final class ProductsViewController: UICollectionViewController {
     let button = UIButton(primaryAction: UIAction { [unowned self] _ in
       let vc = CategoriesViewController()
       
+      vc.viewModel = self.categoriesViewModel
+      vc.delegate = self
+      
       if let sheet = vc.sheetPresentationController {
         sheet.prefersGrabberVisible = true
         sheet.detents = [
@@ -80,6 +83,8 @@ final class ProductsViewController: UICollectionViewController {
   
   private var dataSource: UICollectionViewDiffableDataSource<Int, ProductPreviewViewModel>!
   
+  private var categoriesViewModel: CategoriesViewModel = CategoriesViewModel()
+  
   // MARK: Lifecycle methods
   
   override func viewDidLoad() {
@@ -87,7 +92,7 @@ final class ProductsViewController: UICollectionViewController {
     setupView()
     setDataSource()
     setBindings()
-//    downloadProducts()
+    downloadProducts()
   }
   
   // MARK: Methods
@@ -122,11 +127,15 @@ final class ProductsViewController: UICollectionViewController {
   }
   
   private func setBindings() {
-    viewModel.$products
+    Publishers.CombineLatest(viewModel.$products, viewModel.$productsFiltered)
       .receive(on: DispatchQueue.main)
-      .sink(receiveValue: { [weak self] products in
-        self?.applySnapshot(products: products)
-      })
+      .sink { [weak self] products, filteredProducts in
+          guard self?.categoriesViewModel.filterActive == true else {
+              self?.applySnapshot(products: products)
+              return
+          }
+          self?.applySnapshot(products: filteredProducts)
+      }
       .store(in: &cancellables)
     
     viewModel.$errorMessage
@@ -172,5 +181,11 @@ extension ProductsViewController: UICollectionViewDelegateFlowLayout {
     let itemWidth = (collectionViewWidth - spacing) / 2.0
 
     return CGSize(width: itemWidth, height: collectionView.frame.height / 3.0)
+  }
+}
+
+extension ProductsViewController: CategoriesViewControllerDelegate {
+  func applyCategoryFilter(_ categories: [CategoryViewModel]) {
+    viewModel.applyCategoryFilter(categories.map({ $0.title }))
   }
 }

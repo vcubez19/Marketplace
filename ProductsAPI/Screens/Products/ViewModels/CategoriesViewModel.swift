@@ -15,9 +15,22 @@ final class CategoriesViewModel {
   
   @Published var categoriesLoading: Bool = false
   
-  @Published var selectedCategories: [CategoryViewModel] = []
+  @Published var selectedCategories: [CategoryViewModel] = [] {
+    didSet {
+      filterActive = selectedCategories == appliedCategories
+    }
+  }
+  
+  var filterActive: Bool = false
+  
+  var appliedCategories: [CategoryViewModel] = []
   
   func downloadCategories() {
+    
+    // Only get new instances when there's no active filter so we don't
+    // lose selection state.
+    guard appliedCategories.isEmpty else { return }
+    
     categoriesLoading = true
     APIService.getAndDecode(from: "https://dummyjson.com/products/categories",
                             decode: [String].self) { [weak self] result in
