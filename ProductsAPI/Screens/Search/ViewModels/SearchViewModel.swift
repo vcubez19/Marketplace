@@ -16,14 +16,18 @@ final class SearchViewModel {
   }
   
   @Published var searchHistory: [String] = []
-  @Published var searchResults: [ProductPreviewViewModel] = []
+  @Published var searchResults: [ProductPreviewSearchViewModel] = []
   
   @Published var loadingSearchHistory: Bool = false
   @Published var loadingSearchResults: Bool = false
   
   @Published var errorMessage: String?
   
-  var searchText: String = ""
+  var searchText: String = "" {
+    didSet {
+      downloadSearchResults()
+    }
+  }
   
   func downloadSearchHistory() {
     guard let searches = CoreDataService.shared.getSearchHistory() else {
@@ -46,6 +50,7 @@ final class SearchViewModel {
   }
   
   func downloadSearchResults() {
-    
+    // TODO: Add debouncer
+    searchResults = [ProductPreviewSearchViewModel(product: Product(id: 69, title: "Big fat fucking iPhone 8 betcchhhh", description: "titties", price: 69, discountPercentage: 69, rating: 69, stock: 99, brand: "Apple", category: "Buttholes", thumbnail: "https://cdn.dummyjson.com/product-images/1/1.jpg", images: []))]
   }
 }
