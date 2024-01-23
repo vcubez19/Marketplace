@@ -11,6 +11,26 @@ import Combine
 /// Contains search history and allows users to make new searches
 final class MakeASearchViewController: UITableViewController {
 
+  // MARK: UI Elements
+  
+  private let noSearchHistoryButton: UIButton = {
+    
+    var configuration = UIButton.Configuration.plain()
+    
+    configuration.title = "No search history"
+    configuration.image = UIImage(systemName: "exclamationmark.magnifyingglass")
+    configuration.imagePadding = 4.0
+    configuration.baseBackgroundColor = .label
+    configuration.baseForegroundColor = .label
+
+    let button = UIButton(type: .system)
+    button.configuration = configuration
+    button.isUserInteractionEnabled = false
+    button.translatesAutoresizingMaskIntoConstraints = false
+    
+    return button
+  }()
+  
   // MARK: Stored properties
   
   private let searchViewModel: SearchViewModel = SearchViewModel()
@@ -26,6 +46,10 @@ final class MakeASearchViewController: UITableViewController {
     setupView()
     setDataSource()
     setBindings()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
     downloadSearchHistory()
   }
   
@@ -49,8 +73,17 @@ final class MakeASearchViewController: UITableViewController {
     navigationItem.searchController = searchController
     
     searchController.delegate = self
+    searchController.searchResultsUpdater = self
+    searchController.searchBar.delegate = self
     
     view.backgroundColor = .systemBackground
+    
+    view.addSubview(noSearchHistoryButton)
+    
+    NSLayoutConstraint.activate([
+      noSearchHistoryButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 80.0),
+      noSearchHistoryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+    ])
   }
   
   private func setDataSource() {
@@ -69,8 +102,8 @@ final class MakeASearchViewController: UITableViewController {
       deleteSearchButtonConfiguration.image = UIImage(systemName: "xmark")
       deleteSearchButtonConfiguration.baseForegroundColor = .white
       
-      let deleteSearchButton: UIButton = UIButton(type: .system, primaryAction: UIAction { _ in
-        print("Tapped delete a search")
+      let deleteSearchButton: UIButton = UIButton(type: .system, primaryAction: UIAction { [unowned self] _ in
+        self.searchViewModel.deleteSearchAtIndex(indexPath.row)
       })
       deleteSearchButton.frame = CGRect(x: cell.frame.width - 22.0, y: 0.0, width: 22.0, height: 22.0)
       deleteSearchButton.configuration = deleteSearchButtonConfiguration
@@ -85,7 +118,16 @@ final class MakeASearchViewController: UITableViewController {
     searchViewModel.$searchHistory
       .receive(on: DispatchQueue.main)
       .sink { [weak self] searches in
+        self?.noSearchHistoryButton.isHidden = !searches.isEmpty
         self?.applySnapshot(searches)
+      }
+      .store(in: &cancellables)
+    
+    searchViewModel.$errorMessage
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] message in
+        guard let message = message else { return }
+        self?.showAlertFromBottom(message: message, messageContext: .error)
       }
       .store(in: &cancellables)
   }
@@ -104,13 +146,24 @@ final class MakeASearchViewController: UITableViewController {
   }
 }
 
-// MARK: UISearchControllerDelegate
+// MARK: Search delegate methods
 
-extension MakeASearchViewController: UISearchControllerDelegate {
+extension MakeASearchViewController: UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating {
   func didPresentSearchController(_ searchController: UISearchController) {
     DispatchQueue.main.async {
       searchController.searchBar.becomeFirstResponder()
     }
+  }
+  
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    searchViewModel.saveNewSearch()
+    
+    // Updates data source with new search before user returns to see history.
+    searchViewModel.downloadSearchHistory()
+  }
+  
+  func updateSearchResults(for searchController: UISearchController) {
+    searchViewModel.searchText = searchController.searchBar.text ?? ""
   }
 }
 
