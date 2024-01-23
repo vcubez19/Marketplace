@@ -48,7 +48,7 @@ final class ProductsViewController: UICollectionViewController {
     return button
   }()
   
-  private let searchButton: UIButton = {
+  private lazy var searchButton: UIButton = {
     
     var configuration = UIButton.Configuration.plain()
     
@@ -60,7 +60,10 @@ final class ProductsViewController: UICollectionViewController {
     configuration.cornerStyle = .capsule
     configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .medium)
     
-    let button = UIButton()
+    let button = UIButton(primaryAction: UIAction { [unowned self] _ in
+      let vc = MakeASearchViewController()
+      self.navigationController?.pushViewController(vc, animated: true)
+    })
     button.configuration = configuration
     
     return button
@@ -92,7 +95,7 @@ final class ProductsViewController: UICollectionViewController {
     setupView()
     setDataSource()
     setBindings()
-    downloadProducts()
+//    downloadProducts()
   }
   
   // MARK: Methods
