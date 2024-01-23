@@ -99,6 +99,13 @@ final class CategoriesViewController: UIViewController {
     viewModel.categories.forEach { category in
       category.selected = viewModel.appliedCategories.contains(category)
     }
+    
+    // Move applied items to front of collection view
+    let sortedCategories = viewModel.categories.sorted { (category1, category2) -> Bool in
+      return category1.selected && !category2.selected
+    }
+    
+    viewModel.categories = sortedCategories
   }
   
   override func viewWillDisappear(_ animated: Bool) {
