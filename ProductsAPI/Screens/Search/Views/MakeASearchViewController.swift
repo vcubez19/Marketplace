@@ -33,7 +33,7 @@ final class MakeASearchViewController: UITableViewController {
   
   // MARK: Stored properties
   
-  private let searchViewModel: SearchViewModel = SearchViewModel()
+  private let searchViewModel: LiveSearchViewModel = LiveSearchViewModel()
   
   private var cancellables = Set<AnyCancellable>()
   
@@ -56,6 +56,9 @@ final class MakeASearchViewController: UITableViewController {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(true)
     navigationItem.searchController?.isActive = true
+    DispatchQueue.main.async {
+      self.navigationItem.searchController?.searchBar.becomeFirstResponder()
+    }
   }
   
   // MARK: Methods
@@ -64,7 +67,7 @@ final class MakeASearchViewController: UITableViewController {
     
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     
-    let searchResultsController = SearchResultsViewController()
+    let searchResultsController = LiveSearchResultsViewController()
     
     searchResultsController.viewModel = searchViewModel
     
@@ -72,7 +75,6 @@ final class MakeASearchViewController: UITableViewController {
     
     navigationItem.searchController = searchController
     
-    searchController.delegate = self
     searchController.searchResultsUpdater = self
     searchController.searchBar.delegate = self
     
@@ -123,7 +125,7 @@ final class MakeASearchViewController: UITableViewController {
       }
       .store(in: &cancellables)
     
-    searchViewModel.$errorMessage
+    searchViewModel.$searchHistoryErrorMessage
       .receive(on: DispatchQueue.main)
       .sink { [weak self] message in
         guard let message = message else { return }
@@ -144,22 +146,23 @@ final class MakeASearchViewController: UITableViewController {
   private func downloadSearchHistory() {
     searchViewModel.downloadSearchHistory()
   }
+  
+  private func moveToAllSearchResultsVc(search: String) {
+    let allSearchResultsVc = AllSearchResultsViewController(allSearchViewModel: AllSearchViewModel(search: search))
+    navigationController?.pushViewController(allSearchResultsVc, animated: true)
+  }
 }
 
 // MARK: Search delegate methods
 
-extension MakeASearchViewController: UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating {
-  func didPresentSearchController(_ searchController: UISearchController) {
-    DispatchQueue.main.async {
-      searchController.searchBar.becomeFirstResponder()
-    }
-  }
-  
+extension MakeASearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     searchViewModel.saveNewSearch()
     
     // Updates data source with new search before user returns to see history.
     searchViewModel.downloadSearchHistory()
+    
+    moveToAllSearchResultsVc(search: searchViewModel.searchText)
   }
   
   func updateSearchResults(for searchController: UISearchController) {
@@ -172,6 +175,7 @@ extension MakeASearchViewController: UISearchControllerDelegate, UISearchBarDele
 extension MakeASearchViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+    moveToAllSearchResultsVc(search: searchViewModel.searchHistory[indexPath.row])
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
