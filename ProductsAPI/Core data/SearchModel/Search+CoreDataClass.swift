@@ -2,7 +2,7 @@
 //  Search+CoreDataClass.swift
 //  ProductsAPI
 //
-//  Created by Vincent Cubit on 1/23/24.
+//  Created by Vincent Cubit on 1/24/24.
 //
 //
 

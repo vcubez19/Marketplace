@@ -164,9 +164,6 @@ extension MakeASearchViewController: UISearchBarDelegate, UISearchResultsUpdatin
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     searchViewModel.saveNewSearch()
     
-    // Updates data source with new search before user returns to see history.
-    searchViewModel.downloadSearchHistory()
-    
     searchViewModel.shouldAutomaticallyOpenKeyboardOnAppear = true
 
     moveToAllSearchResultsVc(search: searchViewModel.searchText)

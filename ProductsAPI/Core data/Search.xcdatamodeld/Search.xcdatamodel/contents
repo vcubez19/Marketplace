@@ -3,5 +3,10 @@
     <entity name="Search" representedClassName="Search" syncable="YES">
         <attribute name="created" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="searchText" attributeType="String" minValueString="1" maxValueString="255"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="searchText"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
 </model>

@@ -37,7 +37,7 @@ final class LiveSearchViewModel {
   /// Then we just return without assuming they want to search again.
   var shouldAutomaticallyOpenKeyboardOnAppear: Bool = true
   
-  func downloadSearchHistory() {
+  func downloadSearchHistory() {    
     guard let searches = CoreDataService.shared.getSearchHistory() else {
       searchHistoryErrorMessage = "Could not retrieve your search history."
       return

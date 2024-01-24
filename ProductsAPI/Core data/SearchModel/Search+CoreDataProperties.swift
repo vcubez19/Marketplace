@@ -2,7 +2,7 @@
 //  Search+CoreDataProperties.swift
 //  ProductsAPI
 //
-//  Created by Vincent Cubit on 1/23/24.
+//  Created by Vincent Cubit on 1/24/24.
 //
 //
 
@@ -16,8 +16,8 @@ extension Search {
         return NSFetchRequest<Search>(entityName: "Search")
     }
 
-    @NSManaged public var searchText: String?
     @NSManaged public var created: Date?
+    @NSManaged public var searchText: String?
 
 }
 
