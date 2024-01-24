@@ -35,10 +35,12 @@ final class AllSearchResultsViewController: UITableViewController {
   
   private let allSearchViewModel: AllSearchViewModel
   
+  var liveSearchViewModel: LiveSearchViewModel!
+  
   private var cancellables = Set<AnyCancellable>()
   
   private var dataSource: UITableViewDiffableDataSource<Int, ProductPreviewSearchViewModel>!
-    
+      
   init(allSearchViewModel: AllSearchViewModel) {
     self.allSearchViewModel = allSearchViewModel
     super.init(nibName: nil, bundle: nil)
@@ -57,6 +59,11 @@ final class AllSearchResultsViewController: UITableViewController {
   }
   
   private func setupView() {
+    navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), primaryAction: UIAction { [weak self] _ in
+      self?.navigationController?.popViewController(animated: true)
+    })
+    navigationItem.leftBarButtonItem?.tintColor = .label
+    
     tableView.register(ProductPreviewSearchTableViewCell.self, forCellReuseIdentifier: ProductPreviewSearchTableViewCell.id)
     
     // Static search bar. Just for displaying the current search. When tapped, the user is sent back
@@ -113,6 +120,7 @@ final class AllSearchResultsViewController: UITableViewController {
 
 extension AllSearchResultsViewController: UISearchBarDelegate {
   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    liveSearchViewModel.shouldAutomaticallyOpenKeyboardOnAppear = true
     navigationController?.popViewController(animated: true)
   }
 }

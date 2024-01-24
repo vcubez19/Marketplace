@@ -37,7 +37,7 @@ final class MakeASearchViewController: UITableViewController {
   
   private var cancellables = Set<AnyCancellable>()
   
-  private var dataSource: UITableViewDiffableDataSource<Int, String>!
+  private var dataSource: UITableViewDiffableDataSource<Int, Search>!
   
   // MARK: Lifecycle methods
   
@@ -55,9 +55,13 @@ final class MakeASearchViewController: UITableViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(true)
-    navigationItem.searchController?.isActive = true
+    navigationItem.searchController?.isActive = searchViewModel.shouldAutomaticallyOpenKeyboardOnAppear
     DispatchQueue.main.async {
-      self.navigationItem.searchController?.searchBar.becomeFirstResponder()
+      if self.searchViewModel.shouldAutomaticallyOpenKeyboardOnAppear {
+        self.navigationItem.searchController?.searchBar.becomeFirstResponder()
+      } else {
+        self.navigationItem.searchController?.searchBar.resignFirstResponder()
+      }
     }
   }
   
@@ -96,7 +100,7 @@ final class MakeASearchViewController: UITableViewController {
       
       var content = cell.defaultContentConfiguration()
       
-      content.text = search
+      content.text = search.searchText
       
       cell.contentConfiguration = content
       
@@ -134,8 +138,8 @@ final class MakeASearchViewController: UITableViewController {
       .store(in: &cancellables)
   }
   
-  private func applySnapshot(_ searchHistoryItems: [String]) {
-    var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+  private func applySnapshot(_ searchHistoryItems: [Search]) {
+    var snapshot = NSDiffableDataSourceSnapshot<Int, Search>()
     
     snapshot.appendSections([0])
     snapshot.appendItems(searchHistoryItems)
@@ -149,6 +153,7 @@ final class MakeASearchViewController: UITableViewController {
   
   private func moveToAllSearchResultsVc(search: String) {
     let allSearchResultsVc = AllSearchResultsViewController(allSearchViewModel: AllSearchViewModel(search: search))
+    allSearchResultsVc.liveSearchViewModel = searchViewModel
     navigationController?.pushViewController(allSearchResultsVc, animated: true)
   }
 }
@@ -162,6 +167,8 @@ extension MakeASearchViewController: UISearchBarDelegate, UISearchResultsUpdatin
     // Updates data source with new search before user returns to see history.
     searchViewModel.downloadSearchHistory()
     
+    searchViewModel.shouldAutomaticallyOpenKeyboardOnAppear = true
+
     moveToAllSearchResultsVc(search: searchViewModel.searchText)
   }
   
@@ -175,7 +182,8 @@ extension MakeASearchViewController: UISearchBarDelegate, UISearchResultsUpdatin
 extension MakeASearchViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    moveToAllSearchResultsVc(search: searchViewModel.searchHistory[indexPath.row])
+    searchViewModel.shouldAutomaticallyOpenKeyboardOnAppear = false
+    moveToAllSearchResultsVc(search: searchViewModel.searchHistory[indexPath.row].searchText!)
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

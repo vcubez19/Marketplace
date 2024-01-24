@@ -9,14 +9,8 @@ import Foundation
 
 /// Supplies search history and live search results.
 final class LiveSearchViewModel {
-  
-  private var searchHistorySearchModels: [Search] = [] {
-    didSet {
-      searchHistory = searchHistorySearchModels.compactMap({$0.searchText})
-    }
-  }
-  
-  @Published var searchHistory: [String] = []
+    
+  @Published var searchHistory: [Search] = []
   @Published var searchResults: [ProductPreviewSearchViewModel] = []
   
   @Published var loadingSearchHistory: Bool = false
@@ -39,13 +33,17 @@ final class LiveSearchViewModel {
   // all the search results paginated.
   private var liveSearchLimit: Int = 10
   
+  /// Will be true unless the user searches from a search history search.
+  /// Then we just return without assuming they want to search again.
+  var shouldAutomaticallyOpenKeyboardOnAppear: Bool = true
+  
   func downloadSearchHistory() {
     guard let searches = CoreDataService.shared.getSearchHistory() else {
       searchHistoryErrorMessage = "Could not retrieve your search history."
       return
     }
     
-    searchHistorySearchModels = searches
+    searchHistory = searches
   }
   
   func saveNewSearch() {
@@ -53,7 +51,7 @@ final class LiveSearchViewModel {
   }
   
   func deleteSearchAtIndex(_ index: Int) {
-    let searchToDelete = searchHistorySearchModels[index]
+    let searchToDelete = searchHistory[index]
     guard CoreDataService.shared.deleteSearch(searchToDelete) else { return }
     
     searchHistory.remove(at: index)
