@@ -95,7 +95,7 @@ final class ProductsViewController: UICollectionViewController {
     setupView()
     setDataSource()
     setBindings()
-//    downloadProducts()
+    downloadProducts()
   }
   
   // MARK: Methods

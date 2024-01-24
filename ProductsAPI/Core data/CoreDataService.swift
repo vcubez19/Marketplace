@@ -27,7 +27,7 @@ struct CoreDataService {
       let searches = try context.fetch(fetchRequest)
       return searches
     } catch {
-      // TODO: Log
+      Log.error("Failed to fetch Search models from Core Data.")
       return nil
     }
   }
@@ -46,7 +46,7 @@ struct CoreDataService {
     do {
       try context.save()
     } catch {
-      // TODO: Log
+      Log.warning("Failed to save a new search to Core Data.")
     }
   }
   
@@ -57,7 +57,7 @@ struct CoreDataService {
       try context.save()
       return true
     } catch {
-      // TODO: Log
+      Log.error("Failed to delete a Search model from Core Data.")
       return false
     }
   }

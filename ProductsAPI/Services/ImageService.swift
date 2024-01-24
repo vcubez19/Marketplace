@@ -11,7 +11,6 @@ import Foundation
 struct ImageService {
   static func downloadImageDataAsync(from urlString: String) async -> Data? {
     guard let url = URL(string: urlString) else {
-      // TODO: Log
       return nil
     }
     
@@ -31,7 +30,6 @@ struct ImageService {
       
       return data
     } catch {
-      // TODO: Log
       return nil
     }
   }

@@ -60,6 +60,7 @@ final class ProductPreviewCollectionViewCell: UICollectionViewCell {
       if let thumbnailData = thumbnailData {
         thumbnailView.image = UIImage(data: thumbnailData)
       } else {
+        Log.error("Failed to download a thumbnail for a product.")
         // Can replace with a failed to load image.
         thumbnailView.image = UIImage()
       }

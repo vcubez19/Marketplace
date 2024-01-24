@@ -17,7 +17,7 @@ struct APIService {
                                          decode: T.Type,
                                          completion: @escaping (Result<T, APIError>) -> Void) {
     guard let url = URL(string: urlString) else {
-      // TODO: Log
+      Log.error("Failed to create a URL while making a network request. Bad URL: \(urlString).")
       return
     }
     
@@ -25,11 +25,11 @@ struct APIService {
     
     URLSession.shared.dataTask(with: urlRequest) { data, _, error in
       if let error = error {
-        // TODO: Log
+        Log.error("Error present when making a network request: \(error)")
       }
       
       guard let data = data else {
-        // TODO: Log
+        Log.error("No data when making a network request expecting some data.")
         completion(.failure(.noData))
         return
       }
@@ -39,7 +39,7 @@ struct APIService {
         completion(.success(decodedType))
       }
       catch {
-        // TODO: Log
+        Log.error("Decoding error when decoding data from a network request.")
         completion(.failure(.decodingError))
       }
     }

@@ -45,6 +45,7 @@ final class AllSearchViewModel {
         
           strongSelf.moreProducts = strongSelf.allSearchResults.count != productsResponse.total
         case .failure(_):
+          Log.error("Failed to get search results for search: \(strongSelf.search).")
           strongSelf.errorMessage = "Could not get search results."
       }
     }

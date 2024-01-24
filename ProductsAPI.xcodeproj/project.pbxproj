@@ -39,6 +39,7 @@
 		32F3A7382B60845C00857C69 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F3A7372B60845C00857C69 /* extensions.swift */; };
 		32F3A73A2B6160B500857C69 /* AllSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F3A7392B6160B500857C69 /* AllSearchResultsViewController.swift */; };
 		32F3A73C2B61611B00857C69 /* AllSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F3A73B2B61611B00857C69 /* AllSearchViewModel.swift */; };
+		32F3A7412B617BB100857C69 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F3A7402B617BB100857C69 /* Log.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +77,7 @@
 		32F3A7372B60845C00857C69 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		32F3A7392B6160B500857C69 /* AllSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSearchResultsViewController.swift; sourceTree = "<group>"; };
 		32F3A73B2B61611B00857C69 /* AllSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSearchViewModel.swift; sourceTree = "<group>"; };
+		32F3A7402B617BB100857C69 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 		3221468F2B5AF47600C3F382 /* ProductsAPI */ = {
 			isa = PBXGroup;
 			children = (
+				32F3A73F2B617B5500857C69 /* Logging */,
 				32F3A7282B60321300857C69 /* Core data */,
 				322146B52B5AFC9200C3F382 /* Services */,
 				322146A42B5AF4A500C3F382 /* App lifecycle */,
@@ -140,8 +143,8 @@
 		322146AA2B5AF4DF00C3F382 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				32F3A71F2B60287500857C69 /* Search */,
 				322146AB2B5AF4E800C3F382 /* Products */,
+				32F3A71F2B60287500857C69 /* Search */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -192,7 +195,6 @@
 			children = (
 				322146B62B5AFC9B00C3F382 /* ImageService.swift */,
 				322146BC2B5B05DF00C3F382 /* APIService */,
-				32F3A7312B6032F400857C69 /* CoreDataService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -266,6 +268,7 @@
 		32F3A7282B60321300857C69 /* Core data */ = {
 			isa = PBXGroup;
 			children = (
+				32F3A7312B6032F400857C69 /* CoreDataService.swift */,
 				32F3A7302B60329100857C69 /* SearchModel */,
 				32F3A7292B60322400857C69 /* Search.xcdatamodeld */,
 			);
@@ -279,6 +282,14 @@
 				32F3A72D2B60328400857C69 /* Search+CoreDataProperties.swift */,
 			);
 			path = SearchModel;
+			sourceTree = "<group>";
+		};
+		32F3A73F2B617B5500857C69 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				32F3A7402B617BB100857C69 /* Log.swift */,
+			);
+			path = Logging;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -378,6 +389,7 @@
 				32F3A73A2B6160B500857C69 /* AllSearchResultsViewController.swift in Sources */,
 				32F3A72F2B60328400857C69 /* Search+CoreDataProperties.swift in Sources */,
 				322146B72B5AFC9B00C3F382 /* ImageService.swift in Sources */,
+				32F3A7412B617BB100857C69 /* Log.swift in Sources */,
 				32F3A7222B60289C00857C69 /* MakeASearchViewController.swift in Sources */,
 				32F3A71E2B5B3E7800857C69 /* CategoryViewModel.swift in Sources */,
 				32F3A7182B5B304300857C69 /* CategoriesViewController.swift in Sources */,

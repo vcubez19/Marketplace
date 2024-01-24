@@ -40,7 +40,8 @@ final class ProductsViewModel {
         
           strongSelf.moreProducts = strongSelf.products.count != productsResponse.total
         case .failure(_):
-          strongSelf.errorMessage = "Could not get products. Try again soon."
+          Log.error("Failed to download products.")
+          strongSelf.errorMessage = "Could not get products."
       }
       
       strongSelf.downloadingProducts = false

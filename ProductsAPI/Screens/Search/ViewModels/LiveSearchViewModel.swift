@@ -69,6 +69,7 @@ final class LiveSearchViewModel {
           case .success(let productsResponse):
             strongSelf.searchResults = productsResponse.products.map({ ProductPreviewSearchViewModel(product: $0) })
           case .failure(_):
+            Log.error("Failed to get search results for search: \(strongSelf.searchText).")
             strongSelf.searchResultsErrorMessage = "Could not get search results."
         }
       }

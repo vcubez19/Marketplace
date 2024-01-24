@@ -47,7 +47,8 @@ final class CategoriesViewModel {
         
           strongSelf.categories = tempCategories
         case .failure(_):
-          strongSelf.errorMessage = "Could not get categories. Try again soon."
+          Log.error("Failed to download categories.")
+          strongSelf.errorMessage = "Could not get categories."
       }
       
       strongSelf.categoriesLoading = false
