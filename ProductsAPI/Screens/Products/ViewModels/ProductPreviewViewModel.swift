@@ -9,12 +9,12 @@ import Foundation
 
 /// A view model for a product on the products screen.
 struct ProductPreviewViewModel: Hashable {
-  private let product: Product
+  let product: Product
   
   init(product: Product) {
     self.product = product
   }
-  
+    
   var category: String {
     return product.category
   }

@@ -106,4 +106,11 @@ extension LiveSearchResultsViewController {
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return view.frame.height / 5.0
   }
+  
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    let selectedProduct = viewModel.searchResults[indexPath.row].product
+    let vc = ProductSelectedViewController(product: selectedProduct)
+    presentingViewController?.navigationController?.pushViewController(vc, animated: true)
+  }
 }

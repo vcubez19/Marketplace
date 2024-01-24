@@ -182,6 +182,13 @@ final class ProductsViewController: UICollectionViewController {
       viewModel.downloadProducts()
     }
   }
+  
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    collectionView.deselectItem(at: indexPath, animated: true)
+    let selectedProduct = viewModel.products[indexPath.row].product
+    let vc = ProductSelectedViewController(product: selectedProduct)
+    navigationController?.pushViewController(vc, animated: true)
+  }
 }
 
 // MARK: Collection view delegate
