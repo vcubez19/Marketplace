@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3203B3192B63090A001A926D /* ProductSelectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3203B3182B63090A001A926D /* ProductSelectedView.swift */; };
+		3203B31C2B632513001A926D /* ProductImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3203B31B2B632513001A926D /* ProductImageView.swift */; };
 		322146912B5AF47600C3F382 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322146902B5AF47600C3F382 /* AppDelegate.swift */; };
 		322146932B5AF47600C3F382 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322146922B5AF47600C3F382 /* SceneDelegate.swift */; };
 		322146952B5AF47600C3F382 /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322146942B5AF47600C3F382 /* ProductsViewController.swift */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		3203B3182B63090A001A926D /* ProductSelectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSelectedView.swift; sourceTree = "<group>"; };
+		3203B31B2B632513001A926D /* ProductImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImageView.swift; sourceTree = "<group>"; };
 		3221468D2B5AF47600C3F382 /* ProductsAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProductsAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		322146902B5AF47600C3F382 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		322146922B5AF47600C3F382 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 			children = (
 				32F3A74A2B6195B500857C69 /* ProductSelectedViewController.swift */,
 				3203B3182B63090A001A926D /* ProductSelectedView.swift */,
+				3203B31B2B632513001A926D /* ProductImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 			files = (
 				32F3A7362B6071F900857C69 /* ProductPreviewSearchViewModel.swift in Sources */,
 				32F3A71A2B5B329900857C69 /* CategoryCollectionViewCell.swift in Sources */,
+				3203B31C2B632513001A926D /* ProductImageView.swift in Sources */,
 				322146B12B5AF9DD00C3F382 /* ProductsResponse.swift in Sources */,
 				32F3A74E2B61988100857C69 /* ProductSelectedViewModel.swift in Sources */,
 				32F3A7382B60845C00857C69 /* extensions.swift in Sources */,
