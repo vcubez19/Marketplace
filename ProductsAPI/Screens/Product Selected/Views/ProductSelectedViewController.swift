@@ -27,6 +27,20 @@ final class ProductSelectedViewController: UIViewController {
   }
   
   private func setupView() {
-    view.backgroundColor = .green
+    
+    let productSelectedView = ProductSelectedView()
+    let hostingController = UIHostingController(rootView: productSelectedView)
+    addChild(hostingController)
+    hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(hostingController.view)
+
+    NSLayoutConstraint.activate([
+        hostingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+        hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+    ])
+
+    hostingController.didMove(toParent: self)
   }
 }

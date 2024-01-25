@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3203B3192B63090A001A926D /* ProductSelectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3203B3182B63090A001A926D /* ProductSelectedView.swift */; };
 		322146912B5AF47600C3F382 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322146902B5AF47600C3F382 /* AppDelegate.swift */; };
 		322146932B5AF47600C3F382 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322146922B5AF47600C3F382 /* SceneDelegate.swift */; };
 		322146952B5AF47600C3F382 /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322146942B5AF47600C3F382 /* ProductsViewController.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3203B3182B63090A001A926D /* ProductSelectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSelectedView.swift; sourceTree = "<group>"; };
 		3221468D2B5AF47600C3F382 /* ProductsAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProductsAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		322146902B5AF47600C3F382 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		322146922B5AF47600C3F382 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				32F3A74A2B6195B500857C69 /* ProductSelectedViewController.swift */,
+				3203B3182B63090A001A926D /* ProductSelectedView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				322146BE2B5B05E900C3F382 /* APIError.swift in Sources */,
 				322146AF2B5AF91C00C3F382 /* Product.swift in Sources */,
 				32F3A7162B5B247C00857C69 /* ProductPreviewCollectionViewCell.swift in Sources */,
+				3203B3192B63090A001A926D /* ProductSelectedView.swift in Sources */,
 				32F3A74B2B6195B500857C69 /* ProductSelectedViewController.swift in Sources */,
 				322146C42B5B0F2F00C3F382 /* AlertHelpers.swift in Sources */,
 				322146B42B5AFA9C00C3F382 /* ProductPreviewViewModel.swift in Sources */,
