@@ -32,6 +32,7 @@ final class ProductSelectedViewController: UIViewController {
     let hostingController = UIHostingController(rootView: productSelectedView)
     addChild(hostingController)
     hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = .systemBackground
     view.addSubview(hostingController.view)
 
     NSLayoutConstraint.activate([
