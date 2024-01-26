@@ -27,8 +27,7 @@ struct ProductPreviewSearchViewModel: Hashable {
   }
   
   var originalPriceText: String {
-    let discount = product.price * (Int(product.discountPercentage) / 100)
-    return "$\(product.price + discount)"
+    return "$\(product.originalPrice)"
   }
   
   var discountPercentageText: String {

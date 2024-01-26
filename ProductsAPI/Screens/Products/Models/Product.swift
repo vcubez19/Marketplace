@@ -15,6 +15,18 @@ struct Product: Decodable {
   let stock: Int
   let brand, category, thumbnail: String
   let images: [String]
+  
+  var originalPrice: Int {
+    let discount = Double(self.price) * (self.discountPercentage / 100)
+    let discountedPrice = Double(self.price) + discount
+    return Int(discountedPrice.rounded())
+  }
+  
+  /// Some objects from the server do not contain the thumbnail in their images field.
+  /// Since some do, they will be removed and the thumbnail will be placed at the beginning.
+  var imagesWithThumbnailFirst: [String] {
+    return [self.thumbnail] + self.images.filter { !$0.contains("thumbnail") }
+  }
 }
 
 /*

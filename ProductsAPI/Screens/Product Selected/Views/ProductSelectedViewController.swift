@@ -28,7 +28,7 @@ final class ProductSelectedViewController: UIViewController {
   
   private func setupView() {
     
-    let productSelectedView = ProductSelectedView()
+    let productSelectedView = ProductSelectedView(product: product)
     let hostingController = UIHostingController(rootView: productSelectedView)
     addChild(hostingController)
     hostingController.view.translatesAutoresizingMaskIntoConstraints = false
