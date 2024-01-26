@@ -95,7 +95,6 @@ final class MakeASearchViewController: UITableViewController {
   private func setDataSource() {
     dataSource = UITableViewDiffableDataSource(tableView: tableView,
                                                cellProvider: { tableView, indexPath, search in
-      
       let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
       
       var content = cell.defaultContentConfiguration()
