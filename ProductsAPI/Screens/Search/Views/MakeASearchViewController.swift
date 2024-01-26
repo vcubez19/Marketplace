@@ -68,7 +68,6 @@ final class MakeASearchViewController: UITableViewController {
   // MARK: Methods
   
   private func setupView() {
-    
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     
     let searchResultsController = LiveSearchResultsViewController()
