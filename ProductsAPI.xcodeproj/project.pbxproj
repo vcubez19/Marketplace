@@ -204,8 +204,8 @@
 		322146B52B5AFC9200C3F382 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				322146B62B5AFC9B00C3F382 /* ImageService.swift */,
 				322146BC2B5B05DF00C3F382 /* APIService */,
+				322146B62B5AFC9B00C3F382 /* ImageService.swift */,
 				3203B31D2B6409D6001A926D /* TestProductsService.swift */,
 			);
 			path = Services;
