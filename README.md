@@ -20,7 +20,7 @@ Marketplace is an iOS app that leverages DummyJSON's free products API to showca
   <img src="https://github.com/vcubez19/Marketplace/assets/67804332/875296da-741c-415d-bcea-9e5227801517" alt="List of products behind apply filter button" width="250"/>
   <img src="https://github.com/vcubez19/Marketplace/assets/67804332/77ad1df5-f080-4b87-9d89-913f817c6b40" alt="List of products behind clear filter button" width="250"/>
 
-  Note: At the time of writing this, DummyJSON's products API does not allow filtering by multiple categories. So the filter in this project uses data in memory only. Items that have not been downloaded will not show in the filter.
+  Note: At the time of writing this, DummyJSON's products API does not allow filtering by multiple categories. So the filter in this project uses data in memory only. Items that have not been downloaded will not show in the filter. If you want to see the filter in full-effect, scroll to the bottom of the products list and then apply filters.
 - Products search
 
   <img src="https://github.com/vcubez19/Marketplace/assets/67804332/801d0ab4-7269-4c53-8c0d-650a31d93d08" alt="Search history screen" width="250"/>
