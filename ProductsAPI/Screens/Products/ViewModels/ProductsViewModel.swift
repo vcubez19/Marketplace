@@ -46,6 +46,7 @@ final class ProductsViewModel {
   }
   
   func applyCategoryFilter(_ categoryNames: [String]) {
+    /// Set the filtered data source to contain products that have category names contained in the provided array .
     productsFiltered = categoryNames.isEmpty ? products : products.filter({ categoryNames.contains($0.category) })
   }
 }
