@@ -29,7 +29,6 @@ Marketplace is an iOS app that leverages DummyJSON's free products API to showca
   Notable:
   
   - Core Data is used to persist user searches
-  - There's a debouncer on the searching
   - Search updates use Combine and UITableViewDiffableDataSource
 - Product detail
 
