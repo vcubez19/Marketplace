@@ -148,8 +148,8 @@
 		322146AA2B5AF4DF00C3F382 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				32F3A7462B61952000857C69 /* Product Selected */,
 				322146AB2B5AF4E800C3F382 /* Products */,
+				32F3A7462B61952000857C69 /* Product Selected */,
 				32F3A71F2B60287500857C69 /* Search */,
 			);
 			path = Screens;
