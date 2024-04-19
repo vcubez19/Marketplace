@@ -29,7 +29,7 @@ struct CoreDataService {
       let searches = try context.fetch(fetchRequest)
       return searches
     } catch {
-      Log.error("Failed to fetch Search models from Core Data. Error: \(error)")
+//      Log.error("Failed to fetch Search models from Core Data. Error: \(error)")
       return nil
     }
   }
@@ -52,7 +52,7 @@ struct CoreDataService {
     do {
       try context.save()
     } catch {
-      Log.warning("Failed to save a new search to Core Data. Error: \(error)")
+//      Log.warning("Failed to save a new search to Core Data. Error: \(error)")
     }
   }
   
@@ -63,7 +63,7 @@ struct CoreDataService {
       try context.save()
       return true
     } catch {
-      Log.error("Failed to delete a Search model from Core Data. Error: \(error)")
+//      Log.error("Failed to delete a Search model from Core Data. Error: \(error)")
       return false
     }
   }

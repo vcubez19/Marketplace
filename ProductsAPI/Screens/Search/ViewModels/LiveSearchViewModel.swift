@@ -6,10 +6,14 @@
 //
 
 import Foundation
+import os
 
 /// Supplies search history and live search results.
 final class LiveSearchViewModel {
     
+  private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                     category: String(describing: LiveSearchViewModel.self))
+                                     
   @Published var searchHistory: [Search] = []
   @Published var searchResults: [ProductPreviewSearchViewModel] = []
   
@@ -61,16 +65,17 @@ final class LiveSearchViewModel {
     
     searchDebounceTimer?.invalidate()
     searchDebounceTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
+
       guard let strongSelf = self else { return }
       
-      APIService.getAndDecode(from: "https://dummyjson.com/products/search?q=\(strongSelf.searchText)&limit=\(strongSelf.liveSearchLimit)",
-                              decode: ProductsResponse.self) { result in
-        switch result {
-          case .success(let productsResponse):
-            strongSelf.searchResults = productsResponse.products.map({ ProductPreviewSearchViewModel(product: $0) })
-          case .failure(_):
-            Log.error("Failed to get search results for search: \(strongSelf.searchText).")
-            strongSelf.searchResultsErrorMessage = "Could not get search results."
+      Task {
+        do {
+          let productsResponse = try await APIService.getAndDecode(ProductsResponse.self, from: "https://dummyjson.com/products/search?q=\(strongSelf.searchText)&limit=\(strongSelf.liveSearchLimit)")
+          strongSelf.searchResults = productsResponse.products.map({ ProductPreviewSearchViewModel(product: $0) })
+        }
+        catch {
+          Self.logger.error("Failed to get search results for search: \(strongSelf.searchText).")
+          strongSelf.searchResultsErrorMessage = "Could not get search results."
         }
       }
     }

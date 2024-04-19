@@ -171,15 +171,19 @@ final class ProductsViewController: UICollectionViewController {
   }
   
   private func downloadProducts() {
-    viewModel.downloadProducts()
+    Task {
+      await viewModel.downloadProducts()
+    }
   }
   
   // MARK: Pagination
   
   override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     
-    if indexPath.item == viewModel.products.count - 2 {
-      viewModel.downloadProducts()
+    Task {
+      if indexPath.item == viewModel.products.count - 2 {
+        await viewModel.downloadProducts()
+      }
     }
   }
   

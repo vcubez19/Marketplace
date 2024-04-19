@@ -6,11 +6,17 @@
 //
 
 import UIKit
+import os
 
 final class ProductPreviewCollectionViewCell: UICollectionViewCell {
   
+  private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                     category: String(describing: ProductPreviewCollectionViewCell.self))
+  
   static let id = "ProductPreviewCollectionViewCell"
   
+  // MARK: UI Elements
+
   private let thumbnailView: UIImageView = {
     let view = UIImageView()
     view.clipsToBounds = true
@@ -28,6 +34,8 @@ final class ProductPreviewCollectionViewCell: UICollectionViewCell {
     return label
   }()
   
+  // MARK: View lifecycle
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupView()
@@ -36,6 +44,8 @@ final class ProductPreviewCollectionViewCell: UICollectionViewCell {
   required init?(coder: NSCoder) {
     fatalError()
   }
+  
+  // MARK: Methods
   
   private func setupView() {
     contentView.addSubview(productInformationLabel)
@@ -60,7 +70,7 @@ final class ProductPreviewCollectionViewCell: UICollectionViewCell {
       if let thumbnailData = thumbnailData {
         thumbnailView.image = UIImage(data: thumbnailData)
       } else {
-        Log.error("Failed to download a thumbnail for a product.")
+        Self.logger.error("Failed to download a thumbnail for a product with id: \(product.product.id).")
         // Can replace with a failed to load image.
         thumbnailView.image = UIImage()
       }

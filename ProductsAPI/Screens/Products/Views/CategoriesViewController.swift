@@ -185,7 +185,9 @@ final class CategoriesViewController: UIViewController {
   }
   
   private func downloadCategories() {
-    viewModel.downloadCategories()
+    Task {
+      await viewModel.downloadCategories()
+    }
   }
 }
 

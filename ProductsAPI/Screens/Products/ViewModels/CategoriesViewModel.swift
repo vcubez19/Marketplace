@@ -6,8 +6,12 @@
 //
 
 import Foundation
+import os
 
 final class CategoriesViewModel {
+  
+  private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                     category: String(describing: CategoriesViewModel.self))
   
   @Published var categories: [CategoryViewModel] = []
   
@@ -25,34 +29,30 @@ final class CategoriesViewModel {
   
   var appliedCategories: [CategoryViewModel] = []
   
-  func downloadCategories() {
+  func downloadCategories() async {
     
     // Only get new instances when there's no active filter so we don't
     // lose selection state.
     guard appliedCategories.isEmpty else { return }
     
     categoriesLoading = true
-    APIService.getAndDecode(from: "https://dummyjson.com/products/categories",
-                            decode: [String].self) { [weak self] result in
+    
+    do {
+      let categoriesFromServer = try await APIService.getAndDecode([String].self, from: "https://dummyjson.com/products/categories")
       
-      guard let strongSelf = self else { return }
-      
-      switch result {
-        case .success(let categories):
-          var tempCategories: [CategoryViewModel] = []
-        
-          for category in categories {
-            tempCategories.append(CategoryViewModel(title: category))
-          }
-        
-          strongSelf.categories = tempCategories
-        case .failure(_):
-          Log.error("Failed to download categories.")
-          strongSelf.errorMessage = "Could not get categories."
+      var tempCategories: [CategoryViewModel] = []
+    
+      for category in categoriesFromServer {
+        tempCategories.append(CategoryViewModel(title: category))
       }
-      
-      strongSelf.categoriesLoading = false
+    
+      categories = tempCategories
+    } catch {
+      Self.logger.error("Failed to download categories.")
+      errorMessage = "Could not get categories."
     }
+    
+    categoriesLoading = false
   }
   
   func handleSelectedCategory(_ category: CategoryViewModel) {

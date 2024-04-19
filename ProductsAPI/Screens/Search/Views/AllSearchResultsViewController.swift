@@ -112,7 +112,9 @@ final class AllSearchResultsViewController: UITableViewController {
   }
   
   private func downloadAllSearchResults() {
-    allSearchViewModel.downloadAllSearchResults()
+    Task {
+      await allSearchViewModel.downloadAllSearchResults()
+    }
   }
 }
 

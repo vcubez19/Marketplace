@@ -6,9 +6,13 @@
 //
 
 import Foundation
+import os
 
 /// Supplies all search results paginated
 final class AllSearchViewModel {
+  
+  private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                     category: String(describing: AllSearchViewModel.self))
   
   private let search: String
   
@@ -29,25 +33,19 @@ final class AllSearchViewModel {
   
   private var moreProducts: Bool = true
   
-  func downloadAllSearchResults() {
+  func downloadAllSearchResults() async {
     
     guard moreProducts else { return }
     
-    APIService.getAndDecode(from: "https://dummyjson.com/products/search?q=\(search)&skip=\(productsSkip)&limit=\(productsLimit)",
-                            decode: ProductsResponse.self) { [weak self] result in
-      guard let strongSelf = self else { return }
-      
-      switch result {
-        case .success(let productsResponse):
-          strongSelf.allSearchResults.append(contentsOf: productsResponse.products.map({ ProductPreviewSearchViewModel(product: $0) }))
-        
-          strongSelf.productsSkip += strongSelf.productsLimit
-        
-          strongSelf.moreProducts = strongSelf.allSearchResults.count != productsResponse.total
-        case .failure(_):
-          Log.error("Failed to get search results for search: \(strongSelf.search).")
-          strongSelf.errorMessage = "Could not get search results."
-      }
+    do {
+      let productsResponse =  try await APIService.getAndDecode(ProductsResponse.self, from: "https://dummyjson.com/products/search?q=\(search)&skip=\(productsSkip)&limit=\(productsLimit)")
+                                                                
+      allSearchResults.append(contentsOf: productsResponse.products.map({ ProductPreviewSearchViewModel(product: $0) }))
+      productsSkip += productsLimit
+      moreProducts = allSearchResults.count != productsResponse.total
+    } catch {
+      Self.logger.error("Failed to get search results for search: \(self.search).")
+      errorMessage = "Could not get search results."
     }
   }
 }
