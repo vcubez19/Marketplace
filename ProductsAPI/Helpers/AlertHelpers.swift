@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 extension UIViewController {
+  
+  /// Shows a custom alert from the bottom of the screen
   func showAlertFromBottom(message: String, messageContext: MessageType) {
     let alert = BottomAlertView()
     
