@@ -38,7 +38,7 @@ final class AllSearchViewModel {
     guard moreProducts else { return }
     
     do {
-      let productsResponse =  try await APIService.getAndDecode(ProductsResponse.self, from: "https://dummyjson.com/products/search?q=\(search)&skip=\(productsSkip)&limit=\(productsLimit)")
+      let productsResponse =  try await APIService.getAndDecode(ProductsResponse.self, from: SearchAPI.search(search: search, skip: productsSkip, limit: productsLimit))
                                                                 
       allSearchResults.append(contentsOf: productsResponse.products.map({ ProductPreviewSearchViewModel(product: $0) }))
       productsSkip += productsLimit
@@ -49,6 +49,3 @@ final class AllSearchViewModel {
     }
   }
 }
-
-
-// TODO: Search next

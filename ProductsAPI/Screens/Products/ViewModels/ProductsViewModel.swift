@@ -8,7 +8,6 @@
 import Foundation
 import os
 
-/// A view model for the all products
 final class ProductsViewModel {
   
   private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,

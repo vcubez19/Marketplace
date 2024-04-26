@@ -20,7 +20,7 @@ enum CategoriesAPI: API {
   var baseURL: String {
     switch self {
       case .getCategories:
-        return "https://dummyjson.com"
+        return "dummyjson.com"
     }
   }
   

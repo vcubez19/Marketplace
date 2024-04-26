@@ -26,6 +26,8 @@ struct APIService {
       throw APIError.invalidURL
     }
     
+    print(url)
+    
     let urlRequest = URLRequest(url: url)
     
     do  {
