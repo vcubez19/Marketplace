@@ -9,9 +9,20 @@ import Foundation
 
 struct APIService {
 
+  static func buildURL(endpoint: API) -> URLComponents {
+    var components = URLComponents()
+    components.scheme = endpoint.scheme.rawValue
+    components.host = endpoint.baseURL
+    components.path = endpoint.path
+    components.queryItems = endpoint.parameters
+    
+    return components
+  }
+  
   /// Downloads and decodes data into the provided type from a server.
-  static func getAndDecode<T: Decodable>(_ decode: T.Type, from urlString: String) async throws -> T {
-    guard let url = URL(string: urlString) else {
+  static func getAndDecode<T: Decodable>(_ decode: T.Type, from api: API) async throws -> T {
+    
+    guard let url = buildURL(endpoint: api).url else {
       throw APIError.invalidURL
     }
     

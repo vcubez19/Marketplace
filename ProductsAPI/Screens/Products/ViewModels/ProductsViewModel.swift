@@ -32,7 +32,8 @@ final class ProductsViewModel {
     downloadingProducts = true
     
     do {
-      let productsResponse = try await APIService.getAndDecode(ProductsResponse.self, from: "https://dummyjson.com/products?skip=\(productsSkip)&limit=\(productsLimit)")
+      let productsResponse = try await APIService.getAndDecode(ProductsResponse.self, from: ProductsAPI.getProducts(skip: productsSkip, limit: productsLimit))
+      
       products.append(contentsOf: productsResponse.products.map({ ProductPreviewViewModel(product: $0) }))
       productsSkip += productsLimit
       moreProducts = products.count != productsResponse.total

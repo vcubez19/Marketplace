@@ -9,32 +9,32 @@ import Foundation
 
 enum ProductsAPI: API {
   
-  case products(skip: Int, limit: Int)
+  case getProducts(skip: Int, limit: Int)
   
   var scheme: HTTPScheme {
     switch self {
-      case .products:
+      case .getProducts:
         return .https
     }
   }
   
   var baseURL: String {
     switch self {
-      case .products:
+      case .getProducts:
         return "https://dummyjson.com"
     }
   }
   
   var path: String {
     switch self {
-      case .products:
+      case .getProducts:
         return "/products"
     }
   }
   
   var parameters: [URLQueryItem]? {
     switch self {
-      case .products(let skip, let limit):
+      case .getProducts(let skip, let limit):
         return [URLQueryItem(name: "skip", value: "\(skip)"),
                 URLQueryItem(name: "limit", value: "\(limit)")]
     }
@@ -42,7 +42,7 @@ enum ProductsAPI: API {
   
   var method: HTTPMethod {
     switch self {
-      case .products:
+      case .getProducts:
         return .get
     }
   }

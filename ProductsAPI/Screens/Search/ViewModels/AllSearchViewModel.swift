@@ -49,3 +49,6 @@ final class AllSearchViewModel {
     }
   }
 }
+
+
+// TODO: Search next
