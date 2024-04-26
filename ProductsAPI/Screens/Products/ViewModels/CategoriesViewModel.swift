@@ -38,7 +38,7 @@ final class CategoriesViewModel {
     categoriesLoading = true
     
     do {
-      let categoriesFromServer = try await APIService.getAndDecode([String].self, from: CategoriesAPI.getCategories)
+      let categoriesFromServer = try await APIService.request([String].self, from: CategoriesAPI.getCategories)
       
       var tempCategories: [CategoryViewModel] = []
     

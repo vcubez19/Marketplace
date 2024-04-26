@@ -70,7 +70,7 @@ final class LiveSearchViewModel {
       
       Task {
         do {
-          let productsResponse = try await APIService.getAndDecode(ProductsResponse.self, from: SearchAPI.search(search: strongSelf.searchText, skip: 0, limit: strongSelf.liveSearchLimit))
+          let productsResponse = try await APIService.request(ProductsResponse.self, from: SearchAPI.search(search: strongSelf.searchText, skip: 0, limit: strongSelf.liveSearchLimit))
           strongSelf.searchResults = productsResponse.products.map({ ProductPreviewSearchViewModel(product: $0) })
         }
         catch {

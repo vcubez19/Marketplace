@@ -20,7 +20,9 @@ struct APIService {
   }
   
   /// Downloads and decodes data into the provided type from a server.
-  static func getAndDecode<T: Decodable>(_ decode: T.Type, from api: API) async throws -> T {
+  static func request<T: Decodable>(session: URLSession = .shared,
+                                         _ decode: T.Type,
+                                         from api: API) async throws -> T {
     
     guard let url = buildURL(endpoint: api).url else {
       throw APIError.invalidURL
@@ -29,7 +31,7 @@ struct APIService {
     let urlRequest = URLRequest(url: url)
     
     do  {
-      let (data, _) = try await URLSession.shared.data(for: urlRequest)
+      let (data, _) = try await session.data(for: urlRequest)
       return try JSONDecoder().decode(decode.self, from: data)
     }
     catch {

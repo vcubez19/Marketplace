@@ -17,7 +17,7 @@ import Foundation
  
  */
 
-struct ProductsResponse: Decodable {
+struct ProductsResponse: Decodable, Equatable {
   let products: [Product]
   let total: Int
 }
