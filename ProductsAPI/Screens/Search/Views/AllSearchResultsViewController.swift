@@ -58,12 +58,7 @@ final class AllSearchResultsViewController: UITableViewController {
     downloadAllSearchResults()
   }
   
-  private func setupView() {
-    navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), primaryAction: UIAction { [weak self] _ in
-      self?.navigationController?.popViewController(animated: true)
-    })
-    navigationItem.leftBarButtonItem?.tintColor = .label
-    
+  private func setupView() {    
     tableView.register(ProductPreviewSearchTableViewCell.self, forCellReuseIdentifier: ProductPreviewSearchTableViewCell.id)
     
     // Static search bar. Just for displaying the current search. When tapped, the user is sent back
