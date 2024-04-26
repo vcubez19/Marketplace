@@ -80,6 +80,7 @@ final class MakeASearchViewController: UITableViewController {
     
     searchController.searchResultsUpdater = self
     searchController.searchBar.delegate = self
+    searchController.searchBar.autocapitalizationType = .none
     
     view.backgroundColor = .systemBackground
     

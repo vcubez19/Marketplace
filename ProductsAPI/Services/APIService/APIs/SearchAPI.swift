@@ -34,9 +34,9 @@ enum SearchAPI: API {
   var parameters: [URLQueryItem]? {
     switch self {
       case .search(let search, let skip, let limit):
-        return [URLQueryItem(name: "search", value: "\(search)"),
-                URLQueryItem(name: "skip", value: "\(skip)"),
-                URLQueryItem(name: "limit", value: "\(limit)")]
+        return [URLQueryItem(name: "q", value: "\(search.lowercased())"),
+                  URLQueryItem(name: "skip", value: "\(skip)"),
+                  URLQueryItem(name: "limit", value: "\(limit)")]
     }
   }
   
