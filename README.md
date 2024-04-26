@@ -37,7 +37,7 @@ Marketplace is an iOS app that leverages DummyJSON's free products API to showca
 
   Notable:
 
-  - Entire screen written in SwiftUI
+  - Screen written in SwiftUI
  
   
 ## Acknowledgments
