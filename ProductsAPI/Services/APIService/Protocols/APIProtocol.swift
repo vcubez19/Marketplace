@@ -11,7 +11,7 @@ protocol API {
   /// .http or .https
   var scheme: HTTPScheme { get }
   
-  // Example: "https://dummyjson.com"
+  // Example: "dummyjson.com"
   var baseURL: String { get }
   
   // "/products"
