@@ -84,9 +84,7 @@ final class APIServiceTests: XCTestCase {
                                                      [Product].self,
                                                      from: ProductsAPI.getProducts(skip: 0, limit: 20))
     } catch {
-      if error is APIError {
-        XCTFail("The error should be a system decoding error.")
-      }
+      XCTAssertTrue(error is DecodingError)
     }
   }
 }
