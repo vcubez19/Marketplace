@@ -21,8 +21,10 @@ struct TestProductsService {
           stock: 17,
           brand: "Brand 1",
           category: "Category 1",
-          thumbnail: "thumbnail_url_for_product_1",
-          images: ["image_url_for_product_1_1", "image_url_for_product_1_2", "image_url_for_product_1_3"]
+          thumbnail: "https://cdn.dummyjson.com/product-images/1/1.jpg",
+          images: ["https://cdn.dummyjson.com/product-images/1/1.jpg",
+                                   "https://cdn.dummyjson.com/product-images/1/2.jpg",
+                                   "https://cdn.dummyjson.com/product-images/1/3.jpg"]
         ),
         Product(
           id: 2,
@@ -34,7 +36,7 @@ struct TestProductsService {
           stock: 20,
           brand: "Brand 2",
           category: "Category 2",
-          thumbnail: "thumbnail_url_for_product_2",
+          thumbnail: "https://cdn.dummyjson.com/product-images/1/1.jpg",
           images: ["https://cdn.dummyjson.com/product-images/1/1.jpg",
                                    "https://cdn.dummyjson.com/product-images/1/2.jpg",
                                    "https://cdn.dummyjson.com/product-images/1/3.jpg"]
@@ -49,8 +51,10 @@ struct TestProductsService {
           stock: 90,
           brand: "Brand 3",
           category: "Category 3",
-          thumbnail: "thumbnail_url_for_product_3",
-          images: ["image_url_for_product_3_1", "image_url_for_product_3_2", "image_url_for_product_3_3"]
+          thumbnail: "https://cdn.dummyjson.com/product-images/1/1.jpg",
+          images: ["https://cdn.dummyjson.com/product-images/1/1.jpg",
+                                   "https://cdn.dummyjson.com/product-images/1/2.jpg",
+                                   "https://cdn.dummyjson.com/product-images/1/3.jpg"]
         ),
         Product(
           id: 4,
@@ -62,8 +66,10 @@ struct TestProductsService {
           stock: 80,
           brand: "Brand 4",
           category: "Category 4",
-          thumbnail: "thumbnail_url_for_product_4",
-          images: ["image_url_for_product_4_1", "image_url_for_product_4_2", "image_url_for_product_4_3"]
+          thumbnail: "https://cdn.dummyjson.com/product-images/1/1.jpg",
+          images: ["https://cdn.dummyjson.com/product-images/1/1.jpg",
+                                   "https://cdn.dummyjson.com/product-images/1/2.jpg",
+                                   "https://cdn.dummyjson.com/product-images/1/3.jpg"]
         )
     ]
 
