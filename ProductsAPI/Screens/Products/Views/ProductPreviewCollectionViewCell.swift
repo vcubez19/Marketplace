@@ -20,7 +20,7 @@ final class ProductPreviewCollectionViewCell: UICollectionViewCell {
   private let thumbnailView: UIImageView = {
     let view = UIImageView()
     view.clipsToBounds = true
-    view.contentMode = .scaleAspectFill
+    view.contentMode = .scaleAspectFit
     view.translatesAutoresizingMaskIntoConstraints = false
     
     return view
