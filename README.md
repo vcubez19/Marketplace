@@ -15,6 +15,8 @@ Marketplace is an iOS app that leverages DummyJSON's free products API to showca
   Notable:
 
   - Images are cached in memory using URLCache
+ 
+  Note: Some of the image URLs DummyJSON provides download the same image. For example https://cdn.dummyjson.com/product-images/1/1.jpg and https://cdn.dummyjson.com/product-images/1/2.jpg are the same image. This is a DummyJSON issue and not a side effect of this application.
 - Filtered products list
 
   <img src="https://github.com/vcubez19/Marketplace/assets/67804332/875296da-741c-415d-bcea-9e5227801517" alt="List of products behind apply filter button" width="250"/>
