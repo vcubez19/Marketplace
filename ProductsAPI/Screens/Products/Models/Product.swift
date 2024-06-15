@@ -24,9 +24,7 @@ struct Product: Codable, Equatable {
   let meta: Meta
   let images: [String]
   let thumbnail: String
-  
-//  var roundedPrice
-  
+    
   var originalPrice: Double {
     let discount = self.price * (self.discountPercentage / 100)
     let discountedPrice = self.price + discount
