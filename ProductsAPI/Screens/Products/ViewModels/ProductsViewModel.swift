@@ -38,7 +38,7 @@ final class ProductsViewModel {
       moreProducts = products.count != productsResponse.total
     }
     catch {
-      Self.logger.error("Failed to download products.")
+      Self.logger.error("Failed to download products. \(String(describing: error))")
       errorMessage = "Could not get products."
     }
     
@@ -46,7 +46,6 @@ final class ProductsViewModel {
   }
   
   func applyCategoryFilter(_ categoryNames: [String]) {
-    /// Set the filtered data source to contain products that have category names contained in the provided array .
     productsFiltered = categoryNames.isEmpty ? products : products.filter({ categoryNames.contains($0.category) })
   }
 }

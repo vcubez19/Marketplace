@@ -7,19 +7,30 @@
 
 import Foundation
 
-struct Product: Decodable, Equatable {
+struct Product: Codable, Equatable {
   let id: Int
-  let title, description: String
-  let price: Int
-  let discountPercentage, rating: Double
+  let title, description, category: String
+  let price, discountPercentage, rating: Double
   let stock: Int
-  let brand, category, thumbnail: String
+  let tags: [String]
+  let brand: String?
+  let sku: String
+  let weight: Int
+  let dimensions: Dimensions
+  let warrantyInformation, shippingInformation, availabilityStatus: String
+  let reviews: [Review]
+  let returnPolicy: String
+  let minimumOrderQuantity: Int
+  let meta: Meta
   let images: [String]
+  let thumbnail: String
   
-  var originalPrice: Int {
-    let discount = Double(self.price) * (self.discountPercentage / 100)
-    let discountedPrice = Double(self.price) + discount
-    return Int(discountedPrice.rounded())
+//  var roundedPrice
+  
+  var originalPrice: Double {
+    let discount = self.price * (self.discountPercentage / 100)
+    let discountedPrice = self.price + discount
+    return discountedPrice
   }
   
   /// Some objects from the server do not contain the thumbnail in their images field.
@@ -27,30 +38,26 @@ struct Product: Decodable, Equatable {
   var imagesWithThumbnailFirst: [String] {
     return [self.thumbnail] + self.images.filter { !$0.contains("thumbnail") }
   }
-}
+  
+  var brandText: String {
+    return self.brand ?? "Unbranded"
+  }
+    
+  static func == (lhs: Product, rhs: Product) -> Bool {
+    return lhs.id == rhs.id
+  }
+  
+  struct Dimensions: Codable {
+    let width, height, depth: Double
+  }
 
-/*
- 
- 1 product:
- 
-{
-     "id": 1,
-     "title": "iPhone 9",
-     "description": "An apple mobile which is nothing like apple",
-     "price": 549,
-     "discountPercentage": 12.96,
-     "rating": 4.69,
-     "stock": 94,
-     "brand": "Apple",
-     "category": "smartphones",
-     "thumbnail": "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg",
-     "images": [
-         "https://cdn.dummyjson.com/product-images/1/1.jpg",
-         "https://cdn.dummyjson.com/product-images/1/2.jpg",
-         "https://cdn.dummyjson.com/product-images/1/3.jpg",
-         "https://cdn.dummyjson.com/product-images/1/4.jpg",
-         "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg"
-     ]
+  struct Meta: Codable {
+    let createdAt, updatedAt, barcode: String
+    let qrCode: String
+  }
+
+  struct Review: Codable {
+    let rating: Int
+    let comment, date, reviewerName, reviewerEmail: String
+  }
 }
- 
- */
