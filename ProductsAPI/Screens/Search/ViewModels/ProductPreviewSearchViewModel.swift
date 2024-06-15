@@ -23,12 +23,11 @@ struct ProductPreviewSearchViewModel: Hashable {
   }
   
   var currentPriceText: String {
-    return "$\(product.price)"
+    return product.price.formatPrice()
   }
   
   var originalPriceText: String {
-    let formattedPrice = String(format: "%.2f", product.originalPrice)
-    return "$\(formattedPrice)"
+    return product.originalPrice.formatPrice()
   }
   
   var discountPercentageText: String {

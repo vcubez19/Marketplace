@@ -77,7 +77,7 @@ struct ProductSelectedView: View {
             .bold()
             .font(.title2)
           
-          Text("$\(String(format: "%.2f", product.price))")
+          Text("\(product.price.formatPrice())")
             .bold()
             .font(.title3)
           
@@ -117,7 +117,7 @@ struct ProductSelectedView: View {
               
               HStack(spacing: 10.0) {
                 
-                Text("$\(String(format: "%.2f", product.originalPrice))")
+                Text("\(product.originalPrice.formatPrice())")
                   .bold()
                   .font(.footnote)
                 

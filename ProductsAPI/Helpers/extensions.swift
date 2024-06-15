@@ -36,8 +36,13 @@ extension UILabel {
 // MARK: Double
 
 extension Double {
-  func rounded(toPlaces places: Int) -> Double {
-    let divisor = pow(10.0, Double(places))
-    return (self * divisor).rounded() / divisor
+  func formatPrice() -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .currency
+    formatter.maximumFractionDigits = 2
+    formatter.minimumFractionDigits = 2
+    formatter.locale = Locale.current
+  
+    return formatter.string(from: NSNumber(value: self)) ?? "$0.00"
   }
 }
