@@ -27,7 +27,7 @@ enum CategoriesAPI: API {
   var path: String {
     switch self {
       case .getCategories:
-        return "/products/categories"
+        return "/products/category-list"
     }
   }
   

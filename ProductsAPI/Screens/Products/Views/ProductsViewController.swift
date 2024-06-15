@@ -130,14 +130,10 @@ final class ProductsViewController: UICollectionViewController {
   }
   
   private func setBindings() {
-    Publishers.CombineLatest(viewModel.$products, viewModel.$productsFiltered)
+    viewModel.$products
       .receive(on: DispatchQueue.main)
-      .sink { [weak self] products, filteredProducts in
-          guard self?.categoriesViewModel.filterActive == true else {
-              self?.applySnapshot(products: products)
-              return
-          }
-          self?.applySnapshot(products: filteredProducts)
+      .sink { [weak self] products in
+        self?.applySnapshot(products: products)
       }
       .store(in: &cancellables)
     
@@ -181,7 +177,7 @@ final class ProductsViewController: UICollectionViewController {
   override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     
     Task {
-      if indexPath.item == viewModel.products.count - 2 {
+      if indexPath.item == viewModel.originalProducts.count - 2 {
         await viewModel.downloadProducts()
       }
     }

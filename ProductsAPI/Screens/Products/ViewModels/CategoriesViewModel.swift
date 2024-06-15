@@ -48,7 +48,7 @@ final class CategoriesViewModel {
     
       categories = tempCategories
     } catch {
-      Self.logger.error("Failed to download categories.")
+      Self.logger.error("Failed to download categories. \(String(describing: error))")
       errorMessage = "Could not get categories."
     }
     

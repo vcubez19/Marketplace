@@ -13,9 +13,13 @@ final class ProductsViewModel {
   private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
                                      category: String(describing: ProductsViewModel.self))
  
-  @Published var products: [ProductPreviewViewModel] = []
+  @Published var originalProducts: [ProductPreviewViewModel] = [] {
+    didSet {
+      products = originalProducts
+    }
+  }
   
-  @Published var productsFiltered: [ProductPreviewViewModel] = []
+  @Published var products: [ProductPreviewViewModel] = []
   
   @Published var errorMessage: String?
   
@@ -33,9 +37,9 @@ final class ProductsViewModel {
     do {
       let productsResponse = try await APIService.request(ProductsResponse.self, from: ProductsAPI.getProducts(skip: productsSkip, limit: productsLimit))
       
-      products.append(contentsOf: productsResponse.products.map({ ProductPreviewViewModel(product: $0) }))
+      originalProducts.append(contentsOf: productsResponse.products.map({ ProductPreviewViewModel(product: $0) }))
       productsSkip += productsLimit
-      moreProducts = products.count != productsResponse.total
+      moreProducts = originalProducts.count != productsResponse.total
     }
     catch {
       Self.logger.error("Failed to download products. \(String(describing: error))")
@@ -46,6 +50,6 @@ final class ProductsViewModel {
   }
   
   func applyCategoryFilter(_ categoryNames: [String]) {
-    productsFiltered = categoryNames.isEmpty ? products : products.filter({ categoryNames.contains($0.category) })
+    products = categoryNames.isEmpty ? originalProducts : originalProducts.filter({ categoryNames.contains($0.category) })
   }
 }
