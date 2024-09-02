@@ -1,6 +1,6 @@
 # Marketplace
 
-Marketplace is an iOS app that leverages DummyJSON's free products API to showcase my understanding of fundemental iOS development concepts.
+Marketplace leverages DummyJSON's free products API to showcase my understanding of fundemental software development concepts.
 
 ## Table of Contents
 - [Features](#features)
