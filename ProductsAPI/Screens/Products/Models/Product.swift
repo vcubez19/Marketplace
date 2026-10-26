@@ -30,13 +30,7 @@ struct Product: Codable, Equatable {
     let discountedPrice = self.price + discount
     return discountedPrice
   }
-  
-  /// Some objects from the server do not contain the thumbnail in their images field.
-  /// Since some do, they will be removed and the thumbnail will be placed at the beginning.
-  var imagesWithThumbnailFirst: [String] {
-    return [self.thumbnail] + self.images.filter { !$0.contains("thumbnail") }
-  }
-  
+    
   var brandText: String {
     return self.brand ?? "Unbranded"
   }
