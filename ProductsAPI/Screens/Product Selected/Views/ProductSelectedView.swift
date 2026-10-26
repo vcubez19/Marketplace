@@ -104,7 +104,7 @@ struct ProductSelectedView: View {
             RoundedRectangle(cornerRadius: 10)
                 .strokeBorder(
                     selectedImageIndex == index
-                        ? Color.black
+                        ? Color(uiColor: .label)
                         : Color.gray.opacity(0.2),
                     lineWidth: selectedImageIndex == index ? 2.5 : 1
                 )

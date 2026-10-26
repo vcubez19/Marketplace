@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KC3-yd-tMJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="25098" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KC3-yd-tMJ">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="25073"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,29 +16,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gift" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="QeH-KR-cTK">
-                                <rect key="frame" x="161.66666666666666" y="311" width="70" height="69.333333333333371"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="2Kg-7H-Sef"/>
-                                    <constraint firstAttribute="width" constant="70" id="uKX-Sr-9gf"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DummyJSON - Products API" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hgJ-RO-vgG">
-                                <rect key="frame" x="20" y="401" width="353" height="24"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="seL-0P-PEz" userLabel="Splash">
+                                <rect key="frame" x="63.333333333333343" y="369" width="266.33333333333326" height="114"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gift" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="QeH-KR-cTK">
+                                        <rect key="frame" x="98.333333333333314" y="-0.3333333333333357" width="70" height="70"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="2Kg-7H-Sef"/>
+                                            <constraint firstAttribute="width" constant="70" id="uKX-Sr-9gf"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DummyJSON - Products API" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hgJ-RO-vgG">
+                                        <rect key="frame" x="0.0" y="90" width="266.33333333333331" height="24"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Sp2-3C-hA3"/>
                         <color key="backgroundColor" name="sea"/>
                         <constraints>
-                            <constraint firstItem="hgJ-RO-vgG" firstAttribute="leading" secondItem="Sp2-3C-hA3" secondAttribute="leading" constant="20" id="25z-5x-vtc"/>
-                            <constraint firstItem="Sp2-3C-hA3" firstAttribute="trailing" secondItem="hgJ-RO-vgG" secondAttribute="trailing" constant="20" id="7ay-hc-c5M"/>
-                            <constraint firstItem="hgJ-RO-vgG" firstAttribute="top" secondItem="QeH-KR-cTK" secondAttribute="bottom" constant="20" id="LNG-PD-vqv"/>
-                            <constraint firstItem="QeH-KR-cTK" firstAttribute="centerX" secondItem="rZp-UP-ZY1" secondAttribute="centerX" id="UGk-IR-KfB"/>
-                            <constraint firstItem="QeH-KR-cTK" firstAttribute="centerY" secondItem="rZp-UP-ZY1" secondAttribute="centerY" constant="-80" id="ZuR-qf-4dF"/>
+                            <constraint firstItem="seL-0P-PEz" firstAttribute="centerX" secondItem="rZp-UP-ZY1" secondAttribute="centerX" id="RUq-EA-vdS"/>
+                            <constraint firstItem="seL-0P-PEz" firstAttribute="centerY" secondItem="rZp-UP-ZY1" secondAttribute="centerY" id="WXH-6K-QxY"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -49,7 +50,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="gift" catalog="system" width="128" height="125"/>
+        <image name="gift" catalog="system" width="125" height="128"/>
         <namedColor name="sea">
             <color red="0.066666666666666666" green="0.23529411764705882" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
