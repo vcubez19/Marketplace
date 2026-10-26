@@ -27,10 +27,17 @@ final class CategoriesViewController: UIViewController {
   
   private let categoriesCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
-    layout.scrollDirection = .horizontal
-    
+    layout.scrollDirection = .vertical
+    layout.minimumInteritemSpacing = 8
+    layout.minimumLineSpacing = 8
+    layout.sectionInset = UIEdgeInsets(
+      top: 8,
+      left: 8,
+      bottom: 8,
+      right: 8
+    )
+
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 12.0, right: 8.0)
     collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.id)
     collectionView.backgroundColor = .clear
     collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -45,9 +52,8 @@ final class CategoriesViewController: UIViewController {
     configuration.buttonSize = .large
     configuration.cornerStyle = .medium
     configuration.imagePadding = 8.0
-    configuration.imageColorTransformer = UIConfigurationColorTransformer{ _ in
-      return UIColor.white
-    }
+    configuration.baseBackgroundColor = .systemBlue
+    configuration.baseForegroundColor = .systemBlue
     
     let button = UIButton(type: .system, primaryAction: UIAction { [unowned self] _ in
       
@@ -72,7 +78,7 @@ final class CategoriesViewController: UIViewController {
   
   // MARK: Stored properties
   
-  var viewModel: CategoriesViewModel!
+  private(set) var viewModel: CategoriesViewModel
   
   private var cancellables = Set<AnyCancellable>()
   
@@ -82,6 +88,15 @@ final class CategoriesViewController: UIViewController {
     
   // MARK: Lifecycle methods
   
+  init(viewModel: CategoriesViewModel) {
+      self.viewModel = viewModel
+      super.init(nibName: nil, bundle: nil)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     setupView()
@@ -126,10 +141,10 @@ final class CategoriesViewController: UIViewController {
       categoriesLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 22.0),
       categoriesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12.0),
       
-      categoriesCollectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -25.0),
+      categoriesCollectionView.topAnchor.constraint(equalTo: categoriesLabel.bottomAnchor, constant: 20.0),
       categoriesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       categoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      categoriesCollectionView.heightAnchor.constraint(equalToConstant: 60.0),
+      categoriesCollectionView.bottomAnchor.constraint(equalTo: applyFilterButton.topAnchor, constant: -20.0),
       
       applyFilterButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -44.0),
       applyFilterButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0),
@@ -164,7 +179,8 @@ final class CategoriesViewController: UIViewController {
         guard let strongSelf = self else { return }
         strongSelf.applyFilterButton.isEnabled = !selectedCategories.isEmpty
 
-        strongSelf.applyFilterButton.configuration?.image = selectedCategories.isEmpty ? nil : UIImage(systemName: "\(selectedCategories.count).circle.fill")
+        strongSelf.applyFilterButton.configuration?.image = selectedCategories.isEmpty ? nil : UIImage(systemName: "\(selectedCategories.count).circle.fill")?.withConfiguration(UIImage.SymbolConfiguration(paletteColors: [.black, .white])
+        )
         
         strongSelf.applyFilterButton.configuration?.title = strongSelf.viewModel.filterActive ? "Clear filter" : "Apply filter"
         
@@ -211,7 +227,24 @@ extension CategoriesViewController: UICollectionViewDelegate, UICollectionViewDe
     dataSource.apply(snapshot, animatingDifferences: true)
   }
   
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: collectionView.frame.width / 2.0, height: 50.0)
-  }
+    func collectionView(
+      _ collectionView: UICollectionView,
+      layout collectionViewLayout: UICollectionViewLayout,
+      sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+      guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else {
+        return .zero
+      }
+
+      let inset = layout.sectionInset
+      let spacing = layout.minimumInteritemSpacing
+      let availableWidth = collectionView.bounds.width
+        - inset.left
+        - inset.right
+        - spacing
+
+      let width = floor(availableWidth / 2)
+
+      return CGSize(width: width, height: width)
+    }
 }

@@ -106,7 +106,7 @@ final class MakeASearchViewController: UITableViewController {
       
       var deleteSearchButtonConfiguration = UIButton.Configuration.plain()
       deleteSearchButtonConfiguration.image = UIImage(systemName: "xmark")
-      deleteSearchButtonConfiguration.baseForegroundColor = .white
+      deleteSearchButtonConfiguration.baseForegroundColor = .label
       
       let deleteSearchButton: UIButton = UIButton(type: .system, primaryAction: UIAction { _ in
         self.searchViewModel.deleteSearchAtIndex(indexPath.row)

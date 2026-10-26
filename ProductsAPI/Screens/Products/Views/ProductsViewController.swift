@@ -16,24 +16,19 @@ final class ProductsViewController: UICollectionViewController {
   private lazy var categoriesButton: UIButton = {
     
     var configuration = UIButton.Configuration.plain()
-    
+
     configuration.image = UIImage(systemName: "rectangle.3.group")
-    configuration.background.backgroundColor = .darkGray
-    configuration.imageColorTransformer = UIConfigurationColorTransformer{ color in
-      return .white
-    }
     configuration.cornerStyle = .capsule
     configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .medium)
     
     let button = UIButton(primaryAction: UIAction { [unowned self] _ in
-      let vc = CategoriesViewController()
+      let vc = CategoriesViewController(viewModel: categoriesViewModel)
       
-      vc.viewModel = self.categoriesViewModel
       vc.delegate = self
       
       if let sheet = vc.sheetPresentationController {
         sheet.prefersGrabberVisible = true
-          sheet.detents = [.medium()]
+          sheet.detents = [.large()]
       }
     
       self.present(vc, animated: true)
@@ -49,7 +44,6 @@ final class ProductsViewController: UICollectionViewController {
     var configuration = UIButton.Configuration.plain()
     
     configuration.image = UIImage(systemName: "magnifyingglass")
-    configuration.background.backgroundColor = .darkGray
     configuration.imageColorTransformer = UIConfigurationColorTransformer{ color in
       return .white
     }
