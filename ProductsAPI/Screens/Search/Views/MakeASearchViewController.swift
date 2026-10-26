@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import CoreData
 
 /// Contains search history and allows users to make new searches
 final class MakeASearchViewController: UITableViewController {
@@ -37,7 +38,7 @@ final class MakeASearchViewController: UITableViewController {
   
   private var cancellables = Set<AnyCancellable>()
   
-  private var dataSource: UITableViewDiffableDataSource<Int, Search>!
+  private var dataSource: UITableViewDiffableDataSource<Int, NSManagedObjectID>!
   
   // MARK: Lifecycle methods
   
@@ -94,12 +95,12 @@ final class MakeASearchViewController: UITableViewController {
   
   private func setDataSource() {
     dataSource = UITableViewDiffableDataSource(tableView: tableView,
-                                               cellProvider: { tableView, indexPath, search in
+                                               cellProvider: { tableView, indexPath, searchId in
       let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
       
       var content = cell.defaultContentConfiguration()
       
-      content.text = search.searchText
+      content.text = self.searchViewModel.getSearchByObjectId(searchId)?.searchText
       
       cell.contentConfiguration = content
       
@@ -107,9 +108,10 @@ final class MakeASearchViewController: UITableViewController {
       deleteSearchButtonConfiguration.image = UIImage(systemName: "xmark")
       deleteSearchButtonConfiguration.baseForegroundColor = .white
       
-      let deleteSearchButton: UIButton = UIButton(type: .system, primaryAction: UIAction { [unowned self] _ in
+      let deleteSearchButton: UIButton = UIButton(type: .system, primaryAction: UIAction { _ in
         self.searchViewModel.deleteSearchAtIndex(indexPath.row)
       })
+        
       deleteSearchButton.frame = CGRect(x: cell.frame.width - 22.0, y: 0.0, width: 22.0, height: 22.0)
       deleteSearchButton.configuration = deleteSearchButtonConfiguration
       
@@ -138,10 +140,10 @@ final class MakeASearchViewController: UITableViewController {
   }
   
   private func applySnapshot(_ searchHistoryItems: [Search]) {
-    var snapshot = NSDiffableDataSourceSnapshot<Int, Search>()
+    var snapshot = NSDiffableDataSourceSnapshot<Int, NSManagedObjectID>()
     
     snapshot.appendSections([0])
-    snapshot.appendItems(searchHistoryItems)
+      snapshot.appendItems(searchHistoryItems.map(\.objectID))
     
     dataSource.apply(snapshot)
   }

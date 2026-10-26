@@ -33,11 +33,7 @@ final class ProductsViewController: UICollectionViewController {
       
       if let sheet = vc.sheetPresentationController {
         sheet.prefersGrabberVisible = true
-        sheet.detents = [
-          .custom { _ in
-            return vc.view.frame.height / 3.0
-          }
-        ]
+          sheet.detents = [.medium()]
       }
     
       self.present(vc, animated: true)

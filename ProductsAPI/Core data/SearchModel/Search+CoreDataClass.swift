@@ -10,6 +10,4 @@ import Foundation
 import CoreData
 
 @objc(Search)
-public class Search: NSManagedObject {
-
-}
+public class Search: NSManagedObject {}

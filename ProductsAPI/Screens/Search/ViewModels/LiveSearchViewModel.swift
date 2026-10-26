@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 import os
 
 /// Supplies search history and live search results.
@@ -59,6 +60,10 @@ final class LiveSearchViewModel {
     guard CoreDataService.shared.deleteSearch(searchToDelete) else { return }
     
     searchHistory.remove(at: index)
+  }
+    
+  func getSearchByObjectId(_ id: NSManagedObjectID) -> Search? {
+      searchHistory.first { $0.objectID == id }
   }
   
   func downloadSearchResults() {
