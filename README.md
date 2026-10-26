@@ -10,7 +10,7 @@ Marketplace leverages DummyJSON's free products API to showcase my understanding
 
 - Paginated products list
   
-  <img src="https://github.com/vcubez19/Marketplace/assets/67804332/f1e114b0-289e-4295-b584-4e2e889a9505" alt="List of products" width="250"/>
+  <img width="250" alt="final-products-list" src="https://github.com/user-attachments/assets/f0f79acf-7cd2-4a75-84d7-0979630e69fa"/>
 
   Notable:
 
@@ -19,8 +19,8 @@ Marketplace leverages DummyJSON's free products API to showcase my understanding
   Note: Some of the image URLs DummyJSON provides download the same image. For example https://cdn.dummyjson.com/product-images/1/1.jpg and https://cdn.dummyjson.com/product-images/1/2.jpg are the same image. This is a DummyJSON issue and not a side effect of this application.
 - Filtered products list
 
-  <img src="https://github.com/vcubez19/Marketplace/assets/67804332/875296da-741c-415d-bcea-9e5227801517" alt="List of products behind apply filter button" width="250"/>
-  <img src="https://github.com/vcubez19/Marketplace/assets/67804332/77ad1df5-f080-4b87-9d89-913f817c6b40" alt="List of products behind clear filter button" width="250"/>
+  <img width="250" alt="final-new-apply-filter" src="https://github.com/user-attachments/assets/59a0fb1b-9a56-48be-b696-40ca5bbd28b5"/>
+  <img width="250" alt="final-new-clear-filter" src="https://github.com/user-attachments/assets/22b0cc8e-0aba-484d-9a50-02ebf9c598a1"/>
 
   Note: At the time of writing this, DummyJSON's products API does not allow filtering by multiple categories. So the filter in this project uses data in memory only. Items that have not been downloaded will not show in the filter. If you want to see the filter in full-effect, scroll to the bottom of the products list and then apply filters.
 - Products search
