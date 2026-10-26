@@ -28,13 +28,13 @@ final class CategoriesViewController: UIViewController {
   private let categoriesCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
-    layout.minimumInteritemSpacing = 8
-    layout.minimumLineSpacing = 8
+    layout.minimumInteritemSpacing = 4
+    layout.minimumLineSpacing = 16
     layout.sectionInset = UIEdgeInsets(
-      top: 8,
-      left: 8,
-      bottom: 8,
-      right: 8
+      top: 12,
+      left: 12,
+      bottom: 12,
+      right: 12
     )
 
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
